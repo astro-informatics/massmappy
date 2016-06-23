@@ -43,39 +43,6 @@ M(L/2-N/2+1  : L/2+N/2 , L-N/2+1 : L+N/2 ) = ones(N,N);
 noise = normrnd(0,1e-02,size(gamma1)) + 1i * normrnd(0,1e-02,size(gamma1)) ;
 
 gamma1 = gamma1 .* M ; %+ noise;
-% 
-% k1 = shear2conv(gamma,L);
-
-
-
-
-
-% gamma1 = (gamma +noise) .* mask;
-
-%------------------------- CALCUL MATRICES --------------------------------
-% N=1;
-%
-% C = power_spectrum_computation(Cell, L);
-% k2 = mldivide( Om + inv(C) , reshape(Phit( 1/N * gamma),T1,1));
-% k2 = reshape(k2, L, 2*L-1);
-%
-% % k2lm(1:4) = zeros(4,1);
-% % 
-% % k2 = ssht_inverse(k2lm,L,'Reality',true);
-%
-% figure(1)
-% subplot(211)
-% ssht_plot_mollweide(k,L, 'ColourBar', true);
-% title('Simulated convergence k')
-% 
-% subplot(212)
-% ssht_plot_mollweide(k2,L, 'ColourBar', true);
-% title('Convergence k1 obtained from matrix computation')
-% 
-% 
-% figure(3)
-% ssht_plot_mollweide(abs(k-k2),L, 'ColourBar', true);
-% title('Difference between k and k1')
 
 
 % ------------------------- CALCUL PLAN/SPHERE -----------------------------
