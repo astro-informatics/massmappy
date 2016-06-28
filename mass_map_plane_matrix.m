@@ -5,7 +5,7 @@ addpath('/unsafe1/opt/ssht/src/matlab')
 rng(2)
 
 N = 50;
-L = 2048;
+L = 1024;
 T1 = L * (2*L - 1);
 N1 = L/2-N/2+1  : L/2+N/2;
 N2 =  L-N/2+1 : L+N/2 ;
