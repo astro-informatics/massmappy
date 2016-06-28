@@ -5,12 +5,12 @@ addpath('/unsafe1/opt/ssht/src/matlab')
 rng(2)
 
 N = 50;
-L = 2048;
+L = 516;
 T1 = L * (2*L - 1);
 N1 = L/2-N/2+1  : L/2+N/2;
 N2 =  L-N/2+1 : L+N/2 ;
 sigma_smooth = pi/(L);
-buffer_ratio = 1;
+buffer_ratio = 2;
 
 D = zeros(L,1);
 
@@ -65,27 +65,17 @@ k1 = shear2conv(gamma1,L);
 % ------------------------- CALCUL PLAN/SPHERE -----------------------------
 
 %k2p = shear2conv_plan(gamma1, L/2-N+1 : L/2+N , L-N+1 : L+N, 10*sigma_smooth, L); 
-[k2p, k3p] = shear2conv_plan(gamma1, L/2-buffer_ratio*(N/2)+1 : L/2+buffer_ratio*(N/2) , L-buffer_ratio*(N/2)+1 : L+buffer_ratio*(N/2), 0.0, L); %10*sigma_smooth
+k2p = shear2conv_plan(gamma1, L/2-buffer_ratio*(N/2)+1 : L/2+buffer_ratio*(N/2) , L-buffer_ratio*(N/2)+1 : L+buffer_ratio*(N/2), 0.0, L); %10*sigma_smooth
 % k21p = shear2conv_plan(gamma,  L/2-N+1 : L/2+N ,  L/2-N+1 : L/2+N  , 20*sigma_smooth, L);
 N_p = buffer_ratio*N;
 figure, imagesc(real(k2p))
-k2p = k2p(N_p/2-N/2+1: N_p/2+N/2, N_p/2-N/2+1: N_p/2+N/2);
-%k2p = k2p(N_p/2-N/2+2: N_p/2+N/2+1, N_p/2-N/2+2: N_p/2+N/2+1);
+%k2p = k2p(N_p/2-N/2+1: N_p/2+N/2, N_p/2-N/2+1: N_p/2+N/2);
+k2p = k2p(N_p/2-N/2+2: N_p/2+N/2+1, N_p/2-N/2: N_p/2+N/2-3);
 figure(10), imagesc(real(k2p))
 k2p_s = zeros(L,2*L-1);
 k2p_s(N1,N2) = k2p;
 k2p_s = smooth_sph(k2p_s, sigma_smooth, L);
 k2p =  k2p_s(N1,N2);
-
-figure, imagesc(real(k3p))
-k3p = k3p(N_p/2-N/2+1: N_p/2+N/2, N_p/2-N/2+1: N_p/2+N/2);
-%k2p = k2p(N_p/2-N/2+2: N_p/2+N/2+1, N_p/2-N/2+2: N_p/2+N/2+1);
-figure(11), imagesc(real(k3p))
-k3p_s = zeros(L,2*L-1);
-k3p_s(N1,N2) = k3p;
-k3p_s = smooth_sph(k3p_s, sigma_smooth, L);
-k3p =  k3p_s(N1,N2);
-
 
 ks = smooth_sph(k, sigma_smooth, L);
 %ks = smooth_sph(k, 0.0, L);
@@ -107,56 +97,37 @@ sqrt( sum(sum( (real(ksp)-real(k2p)).^2))/(N*N))
 mi = min(min(real(ksp)));
 ma = max(max(real(ksp)));
 
-
-
 figure(20)
 hold on;
-for i=1:50,
-    y(i) = ksp(i,25);
-end
-plot(1:50,y,'r')
-for i=1:50,
-    y(i) = k1sp(i,25);
-end
-plot(1:50,y,'b')
-for i=1:50,
-    y(i) = k2p(i,25);
-end
-plot(1:50,y,'g')
+plot(1:50,ksp(25,:),'r')
+plot(1:50,k1sp(25,:),'b')
+plot(1:50,k2p(25,:),'g')
 hold off;
 
 
 
 figure(3)
-subplot(421)
+subplot(321)
 imagesc(real(ksp))
 caxis([mi ma]);
 title('Simulated convergence');
-subplot(422)
+subplot(322)
 imagesc(gp)
 title('corresponding shear');
-subplot(423)
+subplot(323)
 imagesc(real(k1sp))
 caxis([mi ma]);
 title('sherical convergence k1');
-subplot(424)
+subplot(324)
 imagesc(abs(real(ksp)-real(k1sp)))
 title('k-k1');
-subplot(425)
+subplot(325)
 imagesc(real(k2p))
 caxis([mi ma]);
 title('plane convergence k2');
-subplot(426)
-imagesc(abs(real(ksp)-real(k2p)))
+subplot(326)
+imagesc(real(ksp)-real(k2p))
 title('k-k2');
-subplot(427)
-imagesc(real(k3p))
-caxis([mi ma]);
-title('plane convergence k3');
-subplot(428)
-imagesc(abs(real(ksp)-real(k3p)))
-title('k-k3');
-
 
 
 figure(4)
