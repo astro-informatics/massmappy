@@ -1,0 +1,6 @@
+m = rotation_mask(mask,0,0,0,256);
+
+figure(1)
+ssht_plot_mollweide(mask,256);
+figure(2)
+plot_gnomonic_proj(mask,256);

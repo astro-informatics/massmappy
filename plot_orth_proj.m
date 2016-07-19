@@ -23,8 +23,7 @@ T2 = size(y,2);
 fp = zeros(T2,T1);
 
 dec = zeros(1,T2);
-ra2 = zeros(1,T1);
-ra1 = zeros(1,T1);
+ra = zeros(T2,T1);
 
 amin = T1;
 amax = 0;
@@ -46,11 +45,8 @@ for k = 1:T2
        phi1 = asin( x(l)/cos(theta1) );
        ph = round(  phi0 + phi1 *(2*L-1)/(2*pi) );
        ph = mod(ph, 2*L-1)+1;
-       if(k == T2)
-           ra2(l) = ph * 180 /(2*L-1);
-       elseif( k == 1)
-           ra1(l) = ph * 180 /(2*L-1);
-       end
+
+       ra(k,l) = ph * 180 /(2*L-1);
        
        fp(k,l) = f(th, ph);
        
@@ -75,19 +71,20 @@ c = cmin : cmax;
 if( plane == 1)
     fp1 = nan2zero(fp(c,a));
 
-    kp1 = shear2conv_plan(fp1,1:size(fp1,1),1:size(fp1,2),15/(3*180)*pi,L);
+    kp1 = shear2conv_planorth(fp1,1:size(fp1,1),1:size(fp1,2),15/(3*180)*pi,dec,ra);
 
 
-    b = imagesc(ra2, dec, real(kp1));
+    b = imagesc(ra(T2,:), dec, real(-kp1));
     set(gca, 'YDir', 'normal');
     set(b,'AlphaData',~isnan(fp(c,a)));
     
 else
 
-    b = imagesc(ra2, dec, real(fp(c,a)));
+    b = imagesc(ra(T2,:), dec, real(fp(c,a)));
     set(gca, 'YDir', 'normal');
     set(b,'AlphaData',~isnan(fp(c,a)));  
-end 
+end
+
     xlabel('RA')
     ylabel('Dec')
     
@@ -100,9 +97,9 @@ end
     for k = 65 : 5 : 80
       x = 55:0.1:90;
       
-      ind = find_closest2(ra1,k);
+      ind = find_closest2(ra(1,:),k);
       
-      x1 = ra2(ind);
+      x1 = ra(T2,ind);
       x2 = k;
       
       y = (x - x2)/(x1-x2) * (dec(1)-dec(T2)) +dec(T2);
@@ -114,7 +111,7 @@ end
     x = 55:0.1:90;
     ind = find_closest2(dec,k);
       
-    x1 = ra2(T1);
+    x1 = ra(T2,T1);
     x2 = k;
       
     y = (x - x2)/(x1-x2) * (-49-dec(T2)) +dec(T2);

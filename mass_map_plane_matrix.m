@@ -2,15 +2,15 @@
 addpath('/unsafe1/opt/ssht/src/matlab')
 
 
-rng(2)
+rng(5)
 
-N = 50;
+N = 100;
 L = 1024;
 T1 = L * (2*L - 1);
 N1 = L/2-N/2+1  : L/2+N/2;
 N2 =  L-N/2+1 : L+N/2 ;
 sigma_smooth = pi/(L);
-buffer_ratio = 1;
+buffer_ratio = 2;
 
 D = zeros(L,1);
 
@@ -74,16 +74,15 @@ k2p = k2p(N_p/2-N/2+1: N_p/2+N/2, N_p/2-N/2+1: N_p/2+N/2);
 figure(10), imagesc(real(k2p))
 k2p_s = zeros(L,2*L-1);
 k2p_s(N1,N2) = k2p;
-k2p_s = smooth_sph(k2p_s, sigma_smooth, L);
+k2p_s = smooth_sph(k2p_s, 0, L);
 k2p =  k2p_s(N1,N2);
 
 figure, imagesc(real(k3p))
 k3p = k3p(N_p/2-N/2+1: N_p/2+N/2, N_p/2-N/2+1: N_p/2+N/2);
-%k2p = k2p(N_p/2-N/2+2: N_p/2+N/2+1, N_p/2-N/2+2: N_p/2+N/2+1);
 figure(11), imagesc(real(k3p))
 k3p_s = zeros(L,2*L-1);
 k3p_s(N1,N2) = k3p;
-k3p_s = smooth_sph(k3p_s, sigma_smooth, L);
+k3p_s = smooth_sph(k3p_s, 0, L);
 k3p =  k3p_s(N1,N2);
 
 
@@ -129,32 +128,32 @@ hold off;
 
 figure(3)
 subplot(421)
-imagesc(real(ksp))
+imagesc(real(kp))
 caxis([mi ma]);
 title('Simulated convergence');
 subplot(422)
 imagesc(gp)
 title('corresponding shear');
 subplot(423)
-imagesc(real(k1sp))
+imagesc(real(k1p))
 caxis([mi ma]);
 title('sherical convergence k1');
 subplot(424)
-imagesc(abs(real(ksp)-real(k1sp)))
+imagesc(abs(real(kp)-real(k1p)))
 title('k-k1');
 subplot(425)
 imagesc(real(k2p))
 caxis([mi ma]);
 title('plane convergence k2');
 subplot(426)
-imagesc(abs(real(ksp)-real(k2p)))
+imagesc(abs(real(kp)-real(k2p)))
 title('k-k2');
 subplot(427)
 imagesc(real(k3p))
 caxis([mi ma]);
 title('plane convergence k3');
 subplot(428)
-imagesc(abs(real(ksp)-real(k3p)))
+imagesc(abs(real(kp)-real(k3p)))
 title('k-k3');
 
 

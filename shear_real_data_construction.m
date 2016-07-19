@@ -1,6 +1,6 @@
 addpath('/unsafe1/opt/ssht/src/matlab')
-
-L = 2048;
+load('DES1')
+L = 512;
 g = zeros(L,2*L-1);
 w = zeros(L,2*L-1);
 nbGal = zeros(L,2*L-1);
@@ -62,8 +62,8 @@ mask = 1-double(nbGal == 0);
 
 g = g .* mask;
 
-% figure(1)
-% ssht_plot_mollweide(g.*mask2nan(mask),L,'ColourBar', false);
+figure(3)
+ssht_plot_mollweide(g.*mask2nan(mask),L,'ColourBar', false);
 % a = 189:215;
 % c = 170:260;
 
