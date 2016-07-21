@@ -14,8 +14,8 @@ load('DES1.mat')
 % y = 0.47: 0.0025: 0.73;
 % x = -1:0.01:1
 % y = -1:0.01:1
-x = -0.19 : 0.00025: 0.07;
-y = -0.88: 0.00025: -0.68;
+x = -0.19 : 0.001: 0.07;
+y = -0.88: 0.001: -0.68;
  
 T1 = size(x,2);
 T2 = size(y,2);
@@ -52,20 +52,8 @@ for k = 1:T2
 %        ph = round(  phi0 + phi1 *(2*L-1)/(2*pi) );
 %        ph = mod(ph, 2*L-1)+1;
 
-       ra1(k,l) = phi1 * 180 /(2*pi);
-%        
-%        if(l < amin)
-%            amin = l;
-%        end
-%        if(l > amax)
-%            amax = l;
-%        end
-%        if(k < cmin)
-%            cmin = k ;
-%        end
-%        if(k > cmax)
-%            cmax = k;
-%        end
+       ra1(k,l) = phi1 * 180 /pi + 80;
+
    end
    end
 end
@@ -122,7 +110,7 @@ abs(ra1(T2,1)-ra1(T2,T1))
     kp1 = shear2conv_planorth(g,1:T2,1:T1,15/(3*180)*pi,dec1,ra1);
 
 
-    b = imagesc(ra1(T2,:), -dec1, -real(kp1).*maskn);
+    b = imagesc(ra1(1,:), -dec1, -real(kp1).*maskn);
 
 %     b = imagesc(x, y, real(kp1));    
     
@@ -137,7 +125,7 @@ abs(ra1(T2,1)-ra1(T2,T1))
     xlabel('RA')
     ylabel('Dec')
     
-%     
+    
 %     
 %     for k = -45 : -5 : -60
 %       x = 55:1:90;
@@ -168,5 +156,5 @@ abs(ra1(T2,1)-ra1(T2,T1))
 %     y = (x - x2)/(x1-x2) * (-49-dec1(T2)) +dec1(T2);
 %       
 %     line(x,y, 'Color', [0.7,0.7,0.7]);    
-% end
-% 
+end
+
