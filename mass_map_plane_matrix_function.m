@@ -1,4 +1,4 @@
-function [error_s, error_p,rms_k] = mass_map_plane_function( Cell, L, N, buffer_ratio,theta0, rect_ratio)
+function [error_s, error_p,rms_k] = mass_map_plane_function( Cell, L, N, buffer_ratio,theta0, rect_ratio, band_limit_mask, mask_type)
 
 
 addpath('/unsafe1/opt/ssht/src/matlab')
@@ -52,32 +52,91 @@ klm(1:4) = [0;0;0;0];
 
 k = real( ssht_inverse(klm,L) );
 
+
+
+if band_limit_mask == 1,
+    M = zeros(size(k));
+    if mask_type == 0,    
+        M(N1 , N2 ) = ones(N,floor(N*rect_ratio));
+    else
+        ang = pi*N/(2*L);
+        [thetas, phis] = ssht_sampling(L, 'Grid', true);
+        d = acos(sin(thetas).*sin(thetas(L/2+1,L+1)).*cos(phis-phis(L/2+1,L+1))+cos(thetas).*cos(thetas(L/2+1,L+1)));
+        M(d<ang) = 1.0;
+    end
+    k = k.*M;
+    k_old = k;
+    k_lm = ssht_forward(k,L,'Reality',true);
+    for el=0:(L-1) 
+        
+        gammalm = [gammalm; D(l+1)*km];
+    %M_lm = recsph_gaussian_smooth(M_lm, L, 2*pi/L);
+    k = ssht_inverse(k_lm,L,'Reality',true);
+    figure(10)
+    ssht_plot_mollweide(k,L)
+    drawnow;
+    figure(11)
+    ssht_plot_mollweide(k-k_old,L)
+    drawnow;
+end
+
+
 gamma = ssht_inverse(gammalm,L,'Spin',2);
 
 gamma1 = gamma;
 % gamma1 = (real(gamma) - min(min(real(gamma))))/ (max(max(real(gamma))) - min(min(real(gamma)))) - 0.5;
 % gamma1 = gamma1 + 1i * ((imag(gamma)- min(min(imag(gamma))))/ (max(max(imag(gamma))) - min(min(imag(gamma)))) - 0.5);
 % k = shear2conv(gamma1,L);
-min(min(real(gamma)))
-max(max(real(gamma)))
+%min(min(real(gamma)))
+% max(max(real(gamma)))
+% 
+
+if (band_limit_mask == 0),
+    M = zeros(size(gamma1));
+    if mask_type == 0,    
+        M(N1 , N2 ) = ones(N,floor(N*rect_ratio));
+    else
+        ang = pi*N/(2*L);
+        [thetas, phis] = ssht_sampling(L, 'Grid', true);
+        d = acos(sin(thetas).*sin(thetas(L/2+1,L+1)).*cos(phis-phis(L/2+1,L+1))+cos(thetas).*cos(thetas(L/2+1,L+1)));
+        M(d<ang) = 1.0;
+    end
+    gamma1 = gamma1 .* M ;
+end
+% 
+if band_limit_mask == 2,
+    M = zeros(size(gamma1));
+    if mask_type == 0,    
+        M(N1 , N2 ) = ones(N,floor(N*rect_ratio));
+    else
+        ang = pi*N/(2*L);
+        [thetas, phis] = ssht_sampling(L, 'Grid', true);
+        d = acos(sin(thetas).*sin(thetas(L/2+1,L+1)).*cos(phis-phis(L/2+1,L+1))+cos(thetas).*cos(thetas(L/2+1,L+1)));
+        M(d<ang) = 1.0;
+    end
+    M_old = M;
+    M_lm = ssht_forward(M,L,'Reality',true);
+    M_lm = recsph_gaussian_smooth(M_lm, L, 50*pi/L);
+    M = ssht_inverse(M_lm,L,'Reality',true);
+    figure(10)
+    ssht_plot_mollweide(M,L)
+    drawnow;
+    figure(11)
+    ssht_plot_mollweide(M-M_old,L)
+    drawnow;
+    gamma1 = gamma1 .* M ;
+end
 
 
-M = zeros(size(gamma1));
-% M(L/2-N/2+1  : L/2+N/2 , L-N/2+1 : L+N/2 ) = ones(N,N);
-M(N1p , N2p ) = ones(N_p,floor(N_p*rect_ratio));
-
-
-
-noise = normrnd(0,1e-02,size(gamma1)) + 1i * normrnd(0,1e-02,size(gamma1)) ;
-
-gamma1 = gamma1 .* M ; %+ noise;
+%noise = normrnd(0,1e-02,size(gamma1)) + 1i * normrnd(0,1e-02,size(gamma1)) ;
+%gamma1 = gamma1 + noise;
 % figure, ssht_plot_mollweide(real(gamma1), L, 'Method', 'MW','Mode',0);
 
-k1 = shear2conv(gamma1,L);
+k1 = shear2conv_new(gamma1,L);
 
 % ------------------------- CALCUL PLAN/SPHERE -----------------------------
 %k2p = shear2conv_plan(gamma1, L/2-N+1 : L/2+N , L-N+1 : L+N, 10*sigma_smooth, L); 
-k2p = shear2conv_plan(gamma1, N1p , N2p, 0.0, L); %10*sigma_smooth
+[ k2p] = shear2conv_plan(gamma1, N1p , N2p, 0.0, L); %10*sigma_smooth
 % k21p = shear2conv_plan(gamma,  L/2-N+1 : L/2+N ,  L/2-N+1 : L/2+N  , 20*sigma_smooth, L);
 
 
@@ -92,7 +151,7 @@ ks = smooth_sph(k, sigma_smooth, L);
 %ks = smooth_sph(k, 0.0, L);
 ksp = ks(N1 ,N2);
 
-kp = k(N1 , N2);
+kp = k(N1 , N2).*M(N1 , N2);
 
 k1s = smooth_sph(k1, sigma_smooth, L);
 %k1s = smooth_sph(k1, 0.0, L);%sigma_smooth
@@ -105,7 +164,7 @@ gp =  real( gp(N1 , N2 ) );
 
 % k2p = rand(size(kp)) * 0.04;
 % 
-sqrt( sum(sum( (real(kp)-real(k2p)).^2))/(N*N));
+rms(real(kp)-real(k2p));
 
 figure(3)
 subplot(321)
@@ -136,7 +195,7 @@ subplot(122)
 imagesc(real(k2p))
 title('plane convergence k2');
 
-
+drawnow;
 error_s =  rms(real(kp(:))-real(k1p(:)));
 error_p =  rms(real(kp(:))-real(k2p(:)));
 rms_k = rms(real(kp(:)));

@@ -46,7 +46,7 @@ for k = 1:T2
        ph = round(  phi0 + phi1 *(2*L-1)/(2*pi) );
        ph = mod(ph, 2*L-1)+1;
 
-       ra(k,l) = ph * 180 /(2*L-1);
+       ra(k,l) = ph * 360 /(2*L-1);
        
        fp(k,l) = f(th, ph);
        

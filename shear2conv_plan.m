@@ -28,7 +28,7 @@ for l1 = 1 : M
 %        theta2 = (l2 )*2*pi/(2*L-1);
         
         l1n = (l1-1-M/2)*L/pi; 
-        l2n = (l2-1-N/2)*(2*L-1)/(2*pi);
+        l2n = M*(l2-1-N/2)*(2*L-1)/(2*pi*N);
         
         if ~(abs(l1n) < 1E-3 && abs(l2n) < 1E-3)
             D(l1,l2) = (l1n^2 - l2n^2 + 2* 1i *l1n*l2n)/(l1n^2+l2n^2);

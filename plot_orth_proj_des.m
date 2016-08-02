@@ -3,7 +3,7 @@ function [] = plot_orth_proj_des()
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-load('DES1.mat')
+load('DES.mat')
 
 % centered in L/2, L :
 % x = -0.57 : 0.001: -0.03;

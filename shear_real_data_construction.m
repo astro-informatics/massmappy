@@ -1,12 +1,12 @@
 addpath('/unsafe1/opt/ssht/src/matlab')
-load('DES1')
+load('DES')
 L = 512;
 g = zeros(L,2*L-1);
 w = zeros(L,2*L-1);
 nbGal = zeros(L,2*L-1);
 
-ra1 = RA / 180 * (2*L-1);
-dec1 = (90 - dec) /180 * L;
+ra1 = RA / 360 * (2*L-1);
+dec1 = (90 - dec) /180 * L; % is really theta
 
 T = size(e1,1);
 
@@ -49,7 +49,7 @@ for l1 = 1:L
     end
 end
 
-m1 = round(m1/sum(sum(1-M)));
+m1 = round(m1/sum(sum(1-M))); %central point of DES region
 m2 = round(m2/sum(sum(1-M)));
 
 g = g ./ w;
@@ -64,6 +64,8 @@ g = g .* mask;
 
 figure(3)
 ssht_plot_mollweide(g.*mask2nan(mask),L,'ColourBar', false);
+figure(1)
+ssht_plot_sphere(mask,L,'ColourBar', false);
 % a = 189:215;
 % c = 170:260;
 
