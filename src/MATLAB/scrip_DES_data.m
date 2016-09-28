@@ -1,10 +1,9 @@
 clear all;
-close all;
 
 
 shear_real_data_construction
 
-phi0 = L - 25 * (L/128);
+phi0 = (L - 25 * (L/128))/2;
 theta0 = L/2;
 
 figure(10)
@@ -19,7 +18,7 @@ subplot(122)
 plot_orth_proj(imag(g).*maskn,L,theta0, phi0,0)
 title('imag part of shear')
 drawnow;
-sigma = pi /(6*180);
+sigma = pi /(3*180);
 
 % Spherical KS convergence
 
@@ -45,6 +44,10 @@ k1 = smooth_sph(k1,sigma,L);
 figure(3)
 plot_orth_proj(k1.*maskn,L,theta0, phi0,0)
 title('plane KS convergence')
+drawnow;
+figure(30)
+plot_orth_proj((k1+k).*maskn,L,theta0, phi0,0)
+title('plane KS convergence test')
 drawnow;
 
 % Plane KS convergence with orthogonal projection

@@ -8,7 +8,7 @@ function [] = plot_orth_proj( f, L, theta0, phi0, plane)
 % y = 0.68 : 0.001: 0.87;
 
 % centered in L/2, L-100 :
-x = -0.24 : 0.0005: 0.28;
+x = (-0.24 : 0.0005: 0.28)/2;
 y = 0.68: 0.0005: 0.87;
 
 T1 = size(x,2);
