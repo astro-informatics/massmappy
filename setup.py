@@ -45,6 +45,14 @@ setup(
             include_dirs=include_dirs,
             libraries=[],
             extra_link_args=extra_link_args,
+            extra_compile_args=[]
+    ),
+    Extension("src/python/cy_DES_utils",
+            package_dir=['src'],
+            sources=["src/python/cy_DES_utils.pyx"],
+            include_dirs=include_dirs,
+            libraries=[],
+            extra_link_args=extra_link_args,
             extra_compile_args=[])
     ])
 )

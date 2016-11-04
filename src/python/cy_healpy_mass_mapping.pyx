@@ -29,14 +29,14 @@ def gamma_to_kappa_hp_boris(np.ndarray[double, ndim=1, mode="c"] gamma_real not 
 
 
 def gamma_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \
-    np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside):
+    np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1):
 
     cdef int lmax=L-1
 
     maps_hp = [np.zeros(hp.nside2npix(Nside)),gamma_real, gamma_imag]
     [dummy, gamma_E_lm_rec, gamma_B_lm_rec] = hp.map2alm(maps_hp, lmax=lmax)
 
-    kappa_E_lm, kappa_B_lm  = mw_mm.gamma_lm_to_kappa_lm_hp(gamma_E_lm_rec, gamma_B_lm_rec, L)
+    kappa_E_lm, kappa_B_lm  = mw_mm.gamma_lm_to_kappa_lm_hp(gamma_E_lm_rec, gamma_B_lm_rec, L, sigma=sigma)
 
     kappa_map_E_hp = hp.alm2map(kappa_E_lm, nside=Nside, lmax=lmax, pol=False)
     kappa_map_B_hp = hp.alm2map(kappa_B_lm, nside=Nside, lmax=lmax, pol=False)
