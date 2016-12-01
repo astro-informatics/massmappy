@@ -204,6 +204,83 @@ def gamma_lm_to_kappa_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] gamma_E
 
     return kappa_E_lm, kappa_B_lm
 
+def reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1,\
+    float tol_error=1E-10, bint Iterate=True):
+
+    cdef np.ndarray[complex, ndim=1] gamma_lm, k_lm
+    cdef np.ndarray[long, ndim=2] mask
+    cdef np.ndarray[complex, ndim=2] gamma_dum, k_mw_1, k_mw_2
+    cdef int i, j, n_theta, n_phi, count
+    cdef bint rel_error=True
+
+    n_theta, n_phi = ssht.sample_shape(L,Method=Method)
+
+    gamma_lm = np.zeros((L*L), dtype=complex)
+    kappa_lm = np.zeros((L*L), dtype=complex)
+
+    mask      = np.full((n_theta,n_phi),1,dtype=int)
+    gamma_dum = np.zeros((n_theta,n_phi),dtype=complex)
+    k_mw_1    = np.zeros((n_theta,n_phi),dtype=complex)
+    k_mw_2    = np.zeros((n_theta,n_phi),dtype=complex)
+
+    for i in range(n_theta):
+        for j in range(n_phi):
+            if np.isnan(gamma[i,j]):
+                mask[i,j] = 0
+                gamma[i,j] = 0.0
+
+    k_mw_1 = cy_gamma_to_kappa_mw(gamma, gamma_lm, kappa_lm, k_mw_1, L, Method="MW", sigma=sigma)
+
+    if Iterate:
+        count = 0
+        while(rel_error):
+            count += 1
+            if count>500:
+                raise RuntimeError('Max iterations reached')
+
+            for i in range(n_theta):
+                for j in range(n_phi):
+                    gamma_dum[i,j] = gamma[i,j]*(1-k_mw_1[i,j].real)
+
+            k_mw_2 = cy_gamma_to_kappa_mw(gamma_dum, gamma_lm, kappa_lm, k_mw_2, L, Method="MW", sigma=sigma)
+
+            rel_error = False
+            for i in range(n_theta):
+                for j in range(n_phi):
+                    if np.abs(k_mw_2[i,j] -k_mw_1[i,j]) > tol_error:
+                        rel_error = True
+
+            for i in range(n_theta):
+                for j in range(n_phi):
+                    k_mw_1[i,j] = k_mw_2[i,j]
+
+
+    for i in range(n_theta):
+        for j in range(n_phi):
+            if mask[i,j] == 0:
+                gamma[i,j] = np.nan + 1j*np.nan
+                k_mw_1[i,j] = np.nan + 1j*np.nan
+
+
+    return k_mw_1
+
+
+cdef cy_gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma, np.ndarray[complex, ndim=1, mode="c"] gamma_lm,\
+    np.ndarray[complex, ndim=1, mode="c"] kappa_lm, np.ndarray[complex, ndim=2, mode="c"] k_mw,\
+    int L, str Method="MW", float sigma=-1):
+
+    cdef int i, j, n_theta, n_phi
+
+    n_theta, n_phi = ssht.sample_shape(L,Method=Method)
+
+    gamma_lm = ssht.forward(gamma, L, Method=Method, Spin=2)
+
+    k_lm = gamma_lm_to_kappa_lm_mw(gamma_lm, L, sigma=sigma)
+
+    k_mw = ssht.inverse(k_lm, L, Method=Method)
+
+    return k_mw
+
 def gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1):
 
     cdef np.ndarray[complex, ndim=1] gamma_lm, k_lm
@@ -235,6 +312,103 @@ def gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int 
 
 
     return k_mw
+
+def reduced_shear_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not None, float delta_theta, float delta_phi, \
+    float sigma=-1,float tol_error=1E-15, bint Iterate=True):
+
+    cdef np.ndarray[complex, ndim=2] gamma_kk, k_kk, k_mw_1, k_mw_2, gamma_dum
+    cdef np.ndarray[np.float_t, ndim=2] mask
+    cdef int i, j, N, M, count
+    cdef bint rel_error = True
+
+    N = gamma.shape[0]
+    M = gamma.shape[1]
+
+    mask      = np.zeros((N,M), dtype=float)
+    k_mw_1    = np.zeros((N,M), dtype=complex)
+    k_mw_2    = np.zeros((N,M), dtype=complex)     
+    gamma_dum = np.zeros((N,M), dtype=complex)     
+    gamma_kk  = np.zeros((N,M), dtype=complex)     
+    k_kk      = np.zeros((N,M), dtype=complex)     
+
+    for i in range(N):
+        for j in range(M):
+            if np.isnan(gamma[i,j]):
+                gamma[i,j] = 0.0 + 0.0j
+                mask[i,j]  = np.nan
+
+    gamma_kk = np.fft.fft2(gamma,norm="ortho")
+
+    gamma_kk = np.fft.fftshift(gamma_kk)
+
+    for i in range(N):
+        for j in range(M):
+            l1 = (<float>i-<float>(N/2))/delta_theta; 
+            l2 = (<float>N*(<float>j-<float>(M/2)))/(<float>M*delta_phi);
+        
+            if not(abs(l1) < 1E-6 and abs(l2) < 1E-6):
+                D_ij = (l1*l1 - l2*l2 - 2*1j*l1*l2)/(l1*l1+l2*l2)
+                k_kk[i,j] = gamma_kk[i,j]*D_ij
+                if sigma > 0.0:
+                    k_kk[i,j] = k_kk[i,j]*np.exp(-((l1*l1*sigma*sigma/(N*N))+(l2*l2*sigma*sigma/(M*M)))*np.pi*np.pi)
+            else:
+                k_kk[i,j] = 0.0
+
+    k_kk = np.fft.ifftshift(k_kk)
+
+    k_mw_1 = np.fft.ifft2(k_kk,norm="ortho")
+
+    if Iterate:
+        count = 0
+        while(rel_error):
+            count += 1
+            if count>500:
+                raise RuntimeError('Max iterations reached')
+
+            for i in range(N):
+                for j in range(M):
+                    gamma_dum[i,j] = gamma[i,j]*(1-k_mw_1[i,j].real)
+
+            gamma_kk = np.fft.fft2(gamma_dum,norm="ortho")
+
+            gamma_kk = np.fft.fftshift(gamma_kk)
+
+            for i in range(N):
+                for j in range(M):
+                    l1 = (<float>i-<float>(N/2))/delta_theta; 
+                    l2 = (<float>N*(<float>j-<float>(M/2)))/(<float>M*delta_phi);
+            
+                    if not(abs(l1) < 1E-6 and abs(l2) < 1E-6):
+                        D_ij = (l1*l1 - l2*l2 - 2*1j*l1*l2)/(l1*l1+l2*l2)
+                        k_kk[i,j] = gamma_kk[i,j]*D_ij
+                        if sigma > 0.0:
+                            k_kk[i,j] = k_kk[i,j]*np.exp(-((l1*l1*sigma*sigma/(N*N))+(l2*l2*sigma*sigma/(M*M)))*np.pi*np.pi)
+                    else:
+                        k_kk[i,j] = 0.0
+
+            k_kk = np.fft.ifftshift(k_kk)
+
+            k_mw_2 = np.fft.ifft2(k_kk,norm="ortho")
+
+            rel_error = False
+            for i in range(N):
+                for j in range(M):
+                    if np.abs(k_mw_2[i,j] -k_mw_1[i,j]) > tol_error:
+                        rel_error = True
+
+            for i in range(N):
+                for j in range(M):
+                    k_mw_1[i,j] = k_mw_2[i,j]
+
+
+    for i in range(N):
+        for j in range(M):
+            if np.isnan(mask[i,j]):
+                gamma[i,j] = np.nan + 1j*np.nan
+                k_mw_1[i,j] = np.nan + 1j*np.nan
+
+    return k_mw_1
+
 
 def gamma_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not None, float delta_theta, float delta_phi, float sigma=-1):
 
