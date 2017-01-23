@@ -92,37 +92,37 @@ k_rec_mw = mm.gamma_to_kappa_mw(gamma*mask, L, Method=Method)
 # plt.axis('off')
 
 
-# print "Reconstruct on the sphere hp"
+print "Reconstruct on the sphere hp"
 
-# kappa_map_hp_rec_boris = hp_mm.gamma_to_kappa_hp_boris(maps_hp[1], maps_hp[2], L, Nside)
-# kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.gamma_to_kappa_hp(maps_hp[1], maps_hp[2], L, Nside)
+kappa_map_hp_rec_boris = hp_mm.gamma_to_kappa_hp_boris(maps_hp[1], maps_hp[2], L, Nside)
+kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.gamma_to_kappa_hp(maps_hp[1], maps_hp[2], L, Nside)
 
-# hp.mollview(k_hp, title="Kappa Healpix Input", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/kappa_input_hp.png")
-# hp.mollview(maps_hp[1], title="Gamma Healpix real", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/gamma_real_input_hp.png")
+hp.mollview(k_hp, title="Kappa Healpix Input", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/kappa_input_hp.png")
+hp.mollview(maps_hp[1], title="Gamma Healpix real", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/gamma_real_input_hp.png")
 
-# hp.mollview(maps_hp[2], title="Gamma Healpix imag", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/gamma_imag_input_hp.png")
+hp.mollview(maps_hp[2], title="Gamma Healpix imag", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/gamma_imag_input_hp.png")
 
-# hp.mollview(kappa_E_map_hp_rec, title="Kappa Healpix Recovered", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/kappa_rec_hp.png")
+hp.mollview(kappa_E_map_hp_rec, title="Kappa Healpix Recovered", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/kappa_rec_hp.png")
 
-# hp.mollview(kappa_E_map_hp_rec-k_hp, title="Kappa Healpix Recovered error real", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/kappa_rec_error_real_hp.png")
+hp.mollview(kappa_E_map_hp_rec-k_hp, title="Kappa Healpix Recovered error real", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/kappa_rec_error_real_hp.png")
 
-# hp.mollview(kappa_B_map_hp_rec, title="Kappa Healpix Recovered error imag", cmap="cubehelix")
-# if save_figs:
-# 	plt.savefig("fig/kappa_rec_error_imag_hp.png")
+hp.mollview(kappa_B_map_hp_rec, title="Kappa Healpix Recovered error imag", cmap="cubehelix")
+if save_figs:
+	plt.savefig("fig/kappa_rec_error_imag_hp.png")
 
-# hp.mollview(kappa_map_hp_rec_boris-k_hp, title="Kappa Healpix Recovered error boris chris")
-# if save_figs:
-# 	plt.savefig("fig/kappa_rec_error_real_boris_hp.png")
+hp.mollview(kappa_map_hp_rec_boris-k_hp, title="Kappa Healpix Recovered error boris chris")
+if save_figs:
+	plt.savefig("fig/kappa_rec_error_real_boris_hp.png")
 
 
 print "on the plane cylindrical projection"

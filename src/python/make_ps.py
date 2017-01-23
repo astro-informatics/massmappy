@@ -401,7 +401,7 @@ if save_figs:
 
 fig, ax = plt.subplots()
 #imgplot = ax.imshow(kappa_sine.real-k_mw_sine.real,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
-imgplot = ax.imshow(kappa_sine.real-kappa_sine_false.real,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
+imgplot = ax.imshow(kappa_sine.real-kappa_sine_false.real,interpolation='nearest',vmin=-0.005,vmax=0.005, cmap="cubehelix")
 ax.imshow(mask_sine, interpolation='nearest', cmap=cm.gray, vmin=-1., vmax=1.)
 ax.set_autoscale_on(False)
 for i in range(RA_lines_2.shape[1]):
@@ -420,7 +420,7 @@ if save_figs:
 
 fig, ax = plt.subplots()
 #imgplot = ax.imshow(-kappa_sine.imag-k_mw_sine.imag,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
-imgplot = ax.imshow(-kappa_sine.imag+kappa_sine_false.imag,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
+imgplot = ax.imshow(-kappa_sine.imag+kappa_sine_false.imag,interpolation='nearest',vmin=-0.005,vmax=0.005, cmap="cubehelix")
 ax.imshow(mask_sine, interpolation='nearest', cmap=cm.gray, vmin=-1., vmax=1.)
 ax.set_autoscale_on(False)
 for i in range(RA_lines_2.shape[1]):

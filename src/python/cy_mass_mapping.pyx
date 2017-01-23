@@ -149,6 +149,8 @@ def kappa_lm_to_gamma_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] k_lm no
             
     return gamma_E_lm, gamma_B_lm
 
+#--------------------------------------------------------------#
+
 def gamma_lm_to_kappa_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] gamma_lm not None, int L, float sigma=-1):
 
     cdef np.ndarray[complex, ndim=1] kappa_lm
@@ -171,6 +173,7 @@ def gamma_lm_to_kappa_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] gamma_l
             
     return kappa_lm
 
+#--------------------------------------------------------------#
 
 def gamma_lm_to_kappa_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] gamma_E_lm not None, \
     np.ndarray[double complex, ndim=1, mode="c"] gamma_B_lm not None, int L, float sigma=-1):
