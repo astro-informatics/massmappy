@@ -208,7 +208,7 @@ def gamma_lm_to_kappa_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] gamma_E
     return kappa_E_lm, kappa_B_lm
 
 def reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1,\
-    float tol_error=1E-10, bint Iterate=True):
+    float tol_error=1E-10, bint Iterate=True, bint return_count=False):
 
     cdef np.ndarray[complex, ndim=1] gamma_lm, k_lm
     cdef np.ndarray[long, ndim=2] mask
@@ -264,8 +264,10 @@ def reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not No
                 gamma[i,j] = np.nan + 1j*np.nan
                 k_mw_1[i,j] = np.nan + 1j*np.nan
 
-
-    return k_mw_1
+    if return_count:
+        return k_mw_1, count
+    else:
+        return k_mw_1
 
 
 cdef cy_gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma, np.ndarray[complex, ndim=1, mode="c"] gamma_lm,\
@@ -317,7 +319,7 @@ def gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int 
     return k_mw
 
 def reduced_shear_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not None, float delta_theta, float delta_phi, \
-    float sigma=-1,float tol_error=1E-15, bint Iterate=True):
+    float sigma=-1,float tol_error=1E-10, bint Iterate=True, bint return_count=False):
 
     cdef np.ndarray[complex, ndim=2] gamma_kk, k_kk, k_mw_1, k_mw_2, gamma_dum
     cdef np.ndarray[np.float_t, ndim=2] mask
@@ -410,7 +412,10 @@ def reduced_shear_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not
                 gamma[i,j] = np.nan + 1j*np.nan
                 k_mw_1[i,j] = np.nan + 1j*np.nan
 
-    return k_mw_1
+    if return_count:
+        return k_mw_1, count
+    else:
+        return k_mw_1
 
 
 def gamma_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not None, float delta_theta, float delta_phi, float sigma=-1):

@@ -143,7 +143,7 @@ mat_contents = sio.loadmat('data/DES.mat')
 Nside  = 512
 L_hp = 4*Nside
 L_mw = 2160 # 2160
-Iterate = False
+Iterate = True
 
 save_figs = True
 show_figs = True

@@ -45,7 +45,7 @@ def gamma_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, 
 
 def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \
     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
-    float tol_error=1E-10, bint Iterate=True):
+    float tol_error=1E-10, bint Iterate=True, bint return_count=False):
 
     cdef np.ndarray[complex, ndim=1] kappa_E_lm, kappa_B_lm
     cdef np.ndarray[double, ndim=1] gamma_real_dum, gamma_imag_dum
@@ -97,8 +97,10 @@ def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real no
 
     kappa_B = hp.alm2map(kappa_B_lm, nside=Nside, lmax=lmax, pol=False)
 
-
-    return kappa_E_1, kappa_B
+    if return_count:
+        return kappa_E_1, kappa_B, count
+    else:
+        return kappa_E_1, kappa_B
 
 
 

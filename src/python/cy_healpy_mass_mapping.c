@@ -1245,6 +1245,7 @@ static char __pyx_k_kappa_B_lm[] = "kappa_B_lm";
 static char __pyx_k_kappa_E_lm[] = "kappa_E_lm";
 static char __pyx_k_nside2npix[] = "nside2npix";
 static char __pyx_k_RuntimeError[] = "RuntimeError";
+static char __pyx_k_return_count[] = "return_count";
 static char __pyx_k_healpy_lm2ind[] = "healpy_lm2ind";
 static char __pyx_k_gamma_B_lm_rec[] = "gamma_B_lm_rec";
 static char __pyx_k_gamma_E_lm_rec[] = "gamma_E_lm_rec";
@@ -1334,6 +1335,7 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_real;
 static PyObject *__pyx_n_s_reduced_shear_to_kappa_hp;
 static PyObject *__pyx_n_s_rel_error;
+static PyObject *__pyx_n_s_return_count;
 static PyObject *__pyx_n_s_shape;
 static PyObject *__pyx_n_s_sigma;
 static PyObject *__pyx_n_s_sqrt;
@@ -1344,7 +1346,7 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_22cy_healpy_mass_mapping_gamma_to_kappa_hp_boris(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside); /* proto */
 static PyObject *__pyx_pf_22cy_healpy_mass_mapping_2gamma_to_kappa_hp(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside, float __pyx_v_sigma); /* proto */
-static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside, float __pyx_v_sigma, float __pyx_v_tol_error, int __pyx_v_Iterate); /* proto */
+static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside, float __pyx_v_sigma, float __pyx_v_tol_error, int __pyx_v_Iterate, int __pyx_v_return_count); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_float_2_;
@@ -2665,7 +2667,7 @@ static PyObject *__pyx_pf_22cy_healpy_mass_mapping_2gamma_to_kappa_hp(CYTHON_UNU
  * 
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \             # <<<<<<<<<<<<<<
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):
  */
 
 /* Python wrapper */
@@ -2679,6 +2681,7 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
   float __pyx_v_sigma;
   float __pyx_v_tol_error;
   int __pyx_v_Iterate;
+  int __pyx_v_return_count;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2686,12 +2689,13 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("reduced_shear_to_kappa_hp (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_gamma_real,&__pyx_n_s_gamma_imag,&__pyx_n_s_L,&__pyx_n_s_Nside,&__pyx_n_s_sigma,&__pyx_n_s_tol_error,&__pyx_n_s_Iterate,0};
-    PyObject* values[7] = {0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_gamma_real,&__pyx_n_s_gamma_imag,&__pyx_n_s_L,&__pyx_n_s_Nside,&__pyx_n_s_sigma,&__pyx_n_s_tol_error,&__pyx_n_s_Iterate,&__pyx_n_s_return_count,0};
+    PyObject* values[8] = {0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2710,17 +2714,17 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_gamma_imag)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 7, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 8, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_L)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 7, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 8, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nside)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 7, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 8, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (kw_args > 0) {
@@ -2737,12 +2741,18 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Iterate);
           if (value) { values[6] = value; kw_args--; }
         }
+        case  7:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_return_count);
+          if (value) { values[7] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "reduced_shear_to_kappa_hp") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2775,16 +2785,21 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
       /* "cy_healpy_mass_mapping.pyx":48
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):             # <<<<<<<<<<<<<<
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):             # <<<<<<<<<<<<<<
  * 
  *     cdef np.ndarray[complex, ndim=1] kappa_E_lm, kappa_B_lm
  */
       __pyx_v_Iterate = ((int)1);
     }
+    if (values[7]) {
+      __pyx_v_return_count = __Pyx_PyObject_IsTrue(values[7]); if (unlikely((__pyx_v_return_count == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    } else {
+      __pyx_v_return_count = ((int)0);
+    }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("reduced_shear_to_kappa_hp", 0, 4, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("cy_healpy_mass_mapping.reduced_shear_to_kappa_hp", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2792,14 +2807,14 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_gamma_real), __pyx_ptype_5numpy_ndarray, 0, "gamma_real", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_gamma_imag), __pyx_ptype_5numpy_ndarray, 0, "gamma_imag", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(__pyx_self, __pyx_v_gamma_real, __pyx_v_gamma_imag, __pyx_v_L, __pyx_v_Nside, __pyx_v_sigma, __pyx_v_tol_error, __pyx_v_Iterate);
+  __pyx_r = __pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(__pyx_self, __pyx_v_gamma_real, __pyx_v_gamma_imag, __pyx_v_L, __pyx_v_Nside, __pyx_v_sigma, __pyx_v_tol_error, __pyx_v_Iterate, __pyx_v_return_count);
 
   /* "cy_healpy_mass_mapping.pyx":46
  *     return kappa_map_E_hp, kappa_map_B_hp
  * 
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \             # <<<<<<<<<<<<<<
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):
  */
 
   /* function exit code */
@@ -2811,7 +2826,7 @@ static PyObject *__pyx_pw_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp(Py
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside, float __pyx_v_sigma, float __pyx_v_tol_error, int __pyx_v_Iterate) {
+static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_gamma_real, PyArrayObject *__pyx_v_gamma_imag, int __pyx_v_L, int __pyx_v_Nside, float __pyx_v_sigma, float __pyx_v_tol_error, int __pyx_v_Iterate, int __pyx_v_return_count) {
   PyArrayObject *__pyx_v_kappa_E_lm = 0;
   PyArrayObject *__pyx_v_kappa_B_lm = 0;
   PyArrayObject *__pyx_v_gamma_real_dum = 0;
@@ -4205,7 +4220,7 @@ static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CY
  * 
  *     kappa_B = hp.alm2map(kappa_B_lm, nside=Nside, lmax=lmax, pol=False)             # <<<<<<<<<<<<<<
  * 
- * 
+ *     if return_count:
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_hp); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
@@ -4255,32 +4270,78 @@ static PyObject *__pyx_pf_22cy_healpy_mass_mapping_4reduced_shear_to_kappa_hp(CY
   __pyx_v_kappa_B = ((PyArrayObject *)__pyx_t_12);
   __pyx_t_12 = 0;
 
-  /* "cy_healpy_mass_mapping.pyx":101
+  /* "cy_healpy_mass_mapping.pyx":100
+ *     kappa_B = hp.alm2map(kappa_B_lm, nside=Nside, lmax=lmax, pol=False)
  * 
+ *     if return_count:             # <<<<<<<<<<<<<<
+ *         return kappa_E_1, kappa_B, count
+ *     else:
+ */
+  __pyx_t_20 = (__pyx_v_return_count != 0);
+  if (__pyx_t_20) {
+
+    /* "cy_healpy_mass_mapping.pyx":101
  * 
- *     return kappa_E_1, kappa_B             # <<<<<<<<<<<<<<
+ *     if return_count:
+ *         return kappa_E_1, kappa_B, count             # <<<<<<<<<<<<<<
+ *     else:
+ *         return kappa_E_1, kappa_B
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_count); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_INCREF(((PyObject *)__pyx_v_kappa_E_1));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_E_1));
+    PyTuple_SET_ITEM(__pyx_t_5, 0, ((PyObject *)__pyx_v_kappa_E_1));
+    __Pyx_INCREF(((PyObject *)__pyx_v_kappa_B));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_B));
+    PyTuple_SET_ITEM(__pyx_t_5, 1, ((PyObject *)__pyx_v_kappa_B));
+    __Pyx_GIVEREF(__pyx_t_12);
+    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_12);
+    __pyx_t_12 = 0;
+    __pyx_r = __pyx_t_5;
+    __pyx_t_5 = 0;
+    goto __pyx_L0;
+
+    /* "cy_healpy_mass_mapping.pyx":100
+ *     kappa_B = hp.alm2map(kappa_B_lm, nside=Nside, lmax=lmax, pol=False)
+ * 
+ *     if return_count:             # <<<<<<<<<<<<<<
+ *         return kappa_E_1, kappa_B, count
+ *     else:
+ */
+  }
+
+  /* "cy_healpy_mass_mapping.pyx":103
+ *         return kappa_E_1, kappa_B, count
+ *     else:
+ *         return kappa_E_1, kappa_B             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_12);
-  __Pyx_INCREF(((PyObject *)__pyx_v_kappa_E_1));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_E_1));
-  PyTuple_SET_ITEM(__pyx_t_12, 0, ((PyObject *)__pyx_v_kappa_E_1));
-  __Pyx_INCREF(((PyObject *)__pyx_v_kappa_B));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_B));
-  PyTuple_SET_ITEM(__pyx_t_12, 1, ((PyObject *)__pyx_v_kappa_B));
-  __pyx_r = __pyx_t_12;
-  __pyx_t_12 = 0;
-  goto __pyx_L0;
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_INCREF(((PyObject *)__pyx_v_kappa_E_1));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_E_1));
+    PyTuple_SET_ITEM(__pyx_t_5, 0, ((PyObject *)__pyx_v_kappa_E_1));
+    __Pyx_INCREF(((PyObject *)__pyx_v_kappa_B));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_kappa_B));
+    PyTuple_SET_ITEM(__pyx_t_5, 1, ((PyObject *)__pyx_v_kappa_B));
+    __pyx_r = __pyx_t_5;
+    __pyx_t_5 = 0;
+    goto __pyx_L0;
+  }
 
   /* "cy_healpy_mass_mapping.pyx":46
  *     return kappa_map_E_hp, kappa_map_B_hp
  * 
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \             # <<<<<<<<<<<<<<
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):
  */
 
   /* function exit code */
@@ -6788,6 +6849,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_real, __pyx_k_real, sizeof(__pyx_k_real), 0, 0, 1, 1},
   {&__pyx_n_s_reduced_shear_to_kappa_hp, __pyx_k_reduced_shear_to_kappa_hp, sizeof(__pyx_k_reduced_shear_to_kappa_hp), 0, 0, 1, 1},
   {&__pyx_n_s_rel_error, __pyx_k_rel_error, sizeof(__pyx_k_rel_error), 0, 0, 1, 1},
+  {&__pyx_n_s_return_count, __pyx_k_return_count, sizeof(__pyx_k_return_count), 0, 0, 1, 1},
   {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
   {&__pyx_n_s_sigma, __pyx_k_sigma, sizeof(__pyx_k_sigma), 0, 0, 1, 1},
   {&__pyx_n_s_sqrt, __pyx_k_sqrt, sizeof(__pyx_k_sqrt), 0, 0, 1, 1},
@@ -6917,12 +6979,12 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \             # <<<<<<<<<<<<<<
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):
  */
-  __pyx_tuple__12 = PyTuple_Pack(23, __pyx_n_s_gamma_real, __pyx_n_s_gamma_imag, __pyx_n_s_L, __pyx_n_s_Nside, __pyx_n_s_sigma, __pyx_n_s_tol_error, __pyx_n_s_Iterate, __pyx_n_s_kappa_E_lm, __pyx_n_s_kappa_B_lm, __pyx_n_s_gamma_real_dum, __pyx_n_s_gamma_imag_dum, __pyx_n_s_kappa_E_1, __pyx_n_s_kappa_E_2, __pyx_n_s_kappa_B, __pyx_n_s_lmax, __pyx_n_s_count, __pyx_n_s_Npix, __pyx_n_s_rel_error, __pyx_n_s_maps_hp, __pyx_n_s_dummy, __pyx_n_s_gamma_E_lm_rec, __pyx_n_s_gamma_B_lm_rec, __pyx_n_s_i); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__12 = PyTuple_Pack(24, __pyx_n_s_gamma_real, __pyx_n_s_gamma_imag, __pyx_n_s_L, __pyx_n_s_Nside, __pyx_n_s_sigma, __pyx_n_s_tol_error, __pyx_n_s_Iterate, __pyx_n_s_return_count, __pyx_n_s_kappa_E_lm, __pyx_n_s_kappa_B_lm, __pyx_n_s_gamma_real_dum, __pyx_n_s_gamma_imag_dum, __pyx_n_s_kappa_E_1, __pyx_n_s_kappa_E_2, __pyx_n_s_kappa_B, __pyx_n_s_lmax, __pyx_n_s_count, __pyx_n_s_Npix, __pyx_n_s_rel_error, __pyx_n_s_maps_hp, __pyx_n_s_dummy, __pyx_n_s_gamma_E_lm_rec, __pyx_n_s_gamma_B_lm_rec, __pyx_n_s_i); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(7, 0, 23, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_cwallis_Dropbox_src_src_m, __pyx_n_s_reduced_shear_to_kappa_hp, 46, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(8, 0, 24, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_cwallis_Dropbox_src_src_m, __pyx_n_s_reduced_shear_to_kappa_hp, 46, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7124,7 +7186,7 @@ PyMODINIT_FUNC PyInit_cy_healpy_mass_mapping(void)
  * 
  * def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real not None, \             # <<<<<<<<<<<<<<
  *     np.ndarray[double, ndim=1, mode="c"] gamma_imag not None, int L, int Nside, float sigma=-1, \
- *     float tol_error=1E-10, bint Iterate=True):
+ *     float tol_error=1E-10, bint Iterate=True, bint return_count=False):
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_22cy_healpy_mass_mapping_5reduced_shear_to_kappa_hp, NULL, __pyx_n_s_cy_healpy_mass_mapping); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
