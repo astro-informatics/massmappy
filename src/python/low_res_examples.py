@@ -70,6 +70,8 @@ else:
 	shear = gamma.copy()
 
 if print_iteration_results:
+	ell = 200
+	normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
 	f = open('data/reduced_shear_iteration.txt','w')
 	print "getting info on spherical MW inversion"
 	start_mw = time.clock()
@@ -77,7 +79,7 @@ if print_iteration_results:
 	elapsed_mw = (time.clock() - start_mw)
 	
 	error_mw = np.sqrt(np.mean((k_mw-k_mw_rec.real)**2))
-	f.write('Spherical MW ' + str(count_mw) + '  ' + str(error_mw) + '  ' + str(elapsed_mw) + '\n')
+	f.write('Spherical MW ' + str(count_mw) + '  ' + str(error_mw/normalisation) + '  ' + str(elapsed_mw) + '\n')
 
 	print "getting info on spherical MW inversion"
 	print "mm.lm_hp2lm"
@@ -95,7 +97,7 @@ if print_iteration_results:
 	elapsed_hp = (time.clock() - start_hp)
 	
 	error_hp = np.sqrt(np.mean((k_hp-kappa_E_map_hp_rec)**2))
-	f.write('Spherical healpy ' + str(count_hp) + '  ' + str(error_hp) + '  ' + str(elapsed_hp) + '\n')
+	f.write('Spherical healpy ' + str(count_hp) + '  ' + str(error_hp/normalisation) + '  ' + str(elapsed_hp) + '\n')
 
 for Projection in Equatorial_Projection_array:
 
@@ -120,7 +122,7 @@ for Projection in Equatorial_Projection_array:
 	
 		error_plane = np.sqrt(np.nanmean((kappa_orig-kappa_plane.real)**2))
 		print count_plane, error_plane, elapsed_plane
-		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane) + '  ' + str(elapsed_plane) + '\n')
+		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane/normalisation) + '  ' + str(elapsed_plane) + '\n')
 	else:
 		# run planar KS
 		kappa_plane  = mm.reduced_shear_to_kappa_plane(shear_plane, 1.0,1.0, tol_error=tol_error, Iterate=Iterate)
@@ -159,7 +161,7 @@ if print_iteration_results:
 
 	error_plane = np.sqrt(np.nanmean((kappa_orig_plane-kappa_plane.real)**2))
 	print count_plane, error_plane, elapsed_plane
-	f.write('Cylindrical ' + str(count_plane) + '  ' + str(error_plane) + '  ' + str(elapsed_plane) + '\n')
+	f.write('Cylindrical ' + str(count_plane) + '  ' + str(error_plane/normalisation) + '  ' + str(elapsed_plane) + '\n')
 else:
 	kappa_plane  = mm.reduced_shear_to_kappa_plane(shear_plane, np.pi/L, 2*np.pi/(2*L-1), tol_error=tol_error, Iterate=Iterate)
 
@@ -262,7 +264,7 @@ for Projection in Polar_Projection_array:
 	
 		error_plane = np.sqrt(np.nanmean((kappa_orig_north-kappa_plane_north.real)**2))
 		print count_plane, error_plane, elapsed_plane
-		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane) + '  ' + str(elapsed_plane) + '\n')
+		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane/normalisation) + '  ' + str(elapsed_plane) + '\n')
 	else:
 		# run planar KS
 		kappa_plane_north  = mm.reduced_shear_to_kappa_plane(shear_plane_north, 1.0, 1.0, tol_error=tol_error, Iterate=Iterate)
