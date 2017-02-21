@@ -16,48 +16,32 @@ Nside = 512
 save_figs = False
 show_figs = True
 Projection = "SP"
+ismasked = False
 
 Cls = np.loadtxt("data/cls_ap.txt")
 
 print "mm.generate_kappa_lm_mw"
-k_lm_mw = mm.generate_kappa_lm_mw(np.array(Cls[:,1]), L, 2) + 0.01*(np.random.randn(L*L) + 1j*np.random.randn(L*L))
-
+k_lm_mw = mm.generate_kappa_lm_mw(np.array(Cls[:,1]), L, 2)
 print "ssht.guassian_smoothing"
-ks_lm_mw = ssht.guassian_smoothing(k_lm_mw, L, sigma_in=np.pi/L)
-
-print "mm.lm_hp2lm"
-ks_lm_hp = mm.lm2lm_hp(ks_lm_mw, L)
-
+ks_lm_mw = ssht.guassian_smoothing(k_lm_mw, L, sigma_in=np.pi/256)
 print "ssht.inverse"
-k_mw = ssht.inverse(ks_lm_mw, L, Reality=False, Method=Method)
-
-print "hp.alm2map"
-k_hp = hp.alm2map(ks_lm_hp,Nside, lmax=lmax)
-
+k_mw = ssht.inverse(ks_lm_mw, L, Reality=True, Method=Method)
 print "mm.kappa_lm_to_gamma_lm_mw"
 gamma_lm = mm.kappa_lm_to_gamma_lm_mw(ks_lm_mw, L)
-
-print "mm.kappa_lm_to_gamma_lm_hp"
-gamma_E_lm_hp, gamma_B_lm_hp = mm.kappa_lm_to_gamma_lm_hp(ks_lm_hp,L)
-
 print "ssht.inverse"
 gamma = ssht.inverse(gamma_lm, L, Method=Method, Spin=2)
-
-print "hp.alm2map"
-gamma_lm_list = [ks_lm_hp, gamma_E_lm_hp, gamma_B_lm_hp]
-maps_hp = hp.alm2map(gamma_lm_list, Nside)
-
-mask = np.zeros((L,2*L-1), dtype=float)#+1.0
-mask[3*L/8:5*L/8,0:2*L/4] = 1.0
-#gamma = gamma*mask
-
-B = 15
-mask_small = np.zeros((L,2*L-1), dtype=float)#+1.0
-mask_small[3*L/8+B:5*L/8-B,3*L/4+B:5*L/4-B] = 1.0
-
+if  True:
+	print "adding noise"
+	shear = gamma/(1.0-k_mw) + 0.001*(np.random.randn(L,2*L-1) + 1j*np.random.randn(L,2*L-1))
+else:
+	shear = gamma/(1.0-k_mw)
 print "Reconstruct on the sphere MW"
-k_rec_mw = mm.gamma_to_kappa_mw(gamma*mask, L, Method=Method)
-
+if ismasked == True:
+   k_rec_mw = mm.reduced_shear_to_kappa_mw(shear*mask, L, Method=Method, tol_error=1E-8)
+else:
+   k_rec_mw = mm.reduced_shear_to_kappa_mw(shear, L, Method=Method, tol_error=1E-8)
+print "done"
+print np.mean(np.abs(k_rec_mw-k_mw))
 #kappa_orig_orth_north, mask_north_real, kappa_orig_orth_south, mask_south_real \
 #	= ssht.polar_projection(k_mw, L, resolution=orth_resolution, Method=Method, rot=[0.0,np.pi/2,0.0], Projection=Projection)# make projection
 
@@ -92,44 +76,44 @@ k_rec_mw = mm.gamma_to_kappa_mw(gamma*mask, L, Method=Method)
 # plt.axis('off')
 
 
-print "Reconstruct on the sphere hp"
+# print "Reconstruct on the sphere hp"
 
-kappa_map_hp_rec_boris = hp_mm.gamma_to_kappa_hp_boris(maps_hp[1], maps_hp[2], L, Nside)
-kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.gamma_to_kappa_hp(maps_hp[1], maps_hp[2], L, Nside)
+# kappa_map_hp_rec_boris = hp_mm.gamma_to_kappa_hp_boris(maps_hp[1], maps_hp[2], L, Nside)
+# kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.gamma_to_kappa_hp(maps_hp[1], maps_hp[2], L, Nside)
 
-hp.mollview(k_hp, title="Kappa Healpix Input", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/kappa_input_hp.png")
-hp.mollview(maps_hp[1], title="Gamma Healpix real", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/gamma_real_input_hp.png")
+# hp.mollview(k_hp, title="Kappa Healpix Input", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/kappa_input_hp.png")
+# hp.mollview(maps_hp[1], title="Gamma Healpix real", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/gamma_real_input_hp.png")
 
-hp.mollview(maps_hp[2], title="Gamma Healpix imag", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/gamma_imag_input_hp.png")
+# hp.mollview(maps_hp[2], title="Gamma Healpix imag", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/gamma_imag_input_hp.png")
 
-hp.mollview(kappa_E_map_hp_rec, title="Kappa Healpix Recovered", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/kappa_rec_hp.png")
+# hp.mollview(kappa_E_map_hp_rec, title="Kappa Healpix Recovered", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/kappa_rec_hp.png")
 
-hp.mollview(kappa_E_map_hp_rec-k_hp, title="Kappa Healpix Recovered error real", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/kappa_rec_error_real_hp.png")
+# hp.mollview(kappa_E_map_hp_rec-k_hp, title="Kappa Healpix Recovered error real", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/kappa_rec_error_real_hp.png")
 
-hp.mollview(kappa_B_map_hp_rec, title="Kappa Healpix Recovered error imag", cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/kappa_rec_error_imag_hp.png")
+# hp.mollview(kappa_B_map_hp_rec, title="Kappa Healpix Recovered error imag", cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/kappa_rec_error_imag_hp.png")
 
-hp.mollview(kappa_map_hp_rec_boris-k_hp, title="Kappa Healpix Recovered error boris chris")
-if save_figs:
-	plt.savefig("fig/kappa_rec_error_real_boris_hp.png")
+# hp.mollview(kappa_map_hp_rec_boris-k_hp, title="Kappa Healpix Recovered error boris chris")
+# if save_figs:
+# 	plt.savefig("fig/kappa_rec_error_real_boris_hp.png")
 
 
-print "on the plane cylindrical projection"
+# print "on the plane cylindrical projection"
 
-gamma_plane = -gamma*mask
-kappa_orig_plane = k_mw*mask
-kappa_plane  = mm.gamma_to_kappa_plane(gamma_plane, np.pi/L, 2*np.pi/(2*L-1))
+# gamma_plane = -gamma*mask
+# kappa_orig_plane = k_mw*mask
+# kappa_plane  = mm.gamma_to_kappa_plane(gamma_plane, np.pi/L, 2*np.pi/(2*L-1))
 
 # print "pyssht.gnomic_projection"
 

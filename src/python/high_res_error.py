@@ -22,8 +22,8 @@ orth_resolution = 2000 # 4000 for pixels similar size to nside 2048
 L = orth_resolution*2
 cyl_resolution = 2*L-1
 Method = "MW"
-save_figs = True
-show_figs = True
+save_figs = False #True
+show_figs = False #True
 do_cylindrical = True
 do_full_sky_proj = True
 do_half_sky_proj = True
@@ -69,7 +69,6 @@ for i_real in range(N_real):
 	gamma_lm = mm.kappa_lm_to_gamma_lm_mw(ks_lm_mw, L)
 
 	gamma = ssht.inverse(gamma_lm, L, Method=Method, Spin=2)
-
 	if do_cylindrical:
 		print "Doing Projection Cylindrical" 
 

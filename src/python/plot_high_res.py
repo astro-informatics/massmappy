@@ -58,18 +58,19 @@ DES_SV = np.sqrt(139.)
 KiDS = np.sqrt(1500.) 
 DES_full = np.sqrt(5000.)
 Euclid = np.sqrt(15000.)
+LSST = np.sqrt(15000.)
 
 label_buffer = 2.0
 ell = 200
 normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
 
 plt.figure()
-plt.plot([CFHTLens,CFHTLens], [0,1], 'k--')
-plt.text(CFHTLens+label_buffer, 0.55, "CFHTLenS", fontsize=18)
+plt.plot([DES_SV,DES_SV], [0,1], 'k--')
+plt.text(DES_SV+label_buffer, 0.55, "DES SV", fontsize=18)
 plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
-plt.plot([Euclid, Euclid], [0,1], 'k--')
-plt.text(Euclid+label_buffer, 0.9, "Euclid", fontsize=18)
+plt.plot([LSST, LSST], [0,1], 'k--')
+plt.text(LSST+label_buffer, 0.9, "LSST", fontsize=18)
 plt.errorbar(angle*2*180/np.pi, error_cylindrical_E_av/normalisation,color='red',\
 	yerr=error_cylindrical_E_std/normalisation, label="Cylindrical")
 plt.errorbar(angle*2*180/np.pi, error_mercator_E_av/normalisation,color='magenta',\
@@ -91,12 +92,12 @@ if save_figs:
 	plt.savefig("fig/ring_error_E.pdf")
 
 plt.figure()
-plt.plot([CFHTLens,CFHTLens], [0,1], 'k--')
-plt.text(CFHTLens+label_buffer, 0.55, "CFHTLenS", fontsize=18)
+plt.plot([DES_SV,DES_SV], [0,1], 'k--')
+plt.text(DES_SV+label_buffer, 0.55, "DES SV", fontsize=18)
 plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
-plt.plot([Euclid, Euclid], [0,1], 'k--')
-plt.text(Euclid+label_buffer, 0.9, "Euclid", fontsize=18)
+plt.plot([LSST, LSST], [0,1], 'k--')
+plt.text(LSST+label_buffer, 0.9, "LSST", fontsize=18)
 plt.errorbar(angle*2*180/np.pi, error_cylindrical_B_av/normalisation,color='r',\
 	yerr=error_cylindrical_B_std/normalisation, label="Cylindrical")
 plt.errorbar(angle*2*180/np.pi, error_mercator_B_av/normalisation,color='magenta',\

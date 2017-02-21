@@ -151,6 +151,7 @@ show_figs = True
 
 Npix   = hp.nside2npix(Nside)
 ra     = np.ascontiguousarray(mat_contents['RA'])
+print ra.shape
 ra_flip = (-1)*(ra-71.) + 71.
 dec    = np.ascontiguousarray(mat_contents['dec'])
 theta, phi = ssht.ra_dec_to_theta_phi(ra_flip, dec, Degrees=True)
