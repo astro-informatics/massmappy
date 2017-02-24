@@ -9,18 +9,32 @@ save_figs = True
 
 Cls = np.loadtxt("data/cls_ap.txt")
 
-error_cylindrical_E = np.loadtxt("data/high_res_results/keep/error_cylindrical_E.txt")
-error_mercator_E = np.loadtxt("data/high_res_results/keep/error_mercater_E.txt")
-error_sine_E = np.loadtxt("data/high_res_results/keep/error_sine_E.txt")
-error_orthographic_E = np.loadtxt("data/high_res_results/keep/error_orthographic_E.txt")
-error_steriographic_E = np.loadtxt("data/high_res_results/keep/error_steriographic_E.txt")
-error_gnomic_E = np.loadtxt("data/high_res_results/keep/error_gnomic_E.txt")
-error_cylindrical_B = np.loadtxt("data/high_res_results/keep/error_cylindrical_B.txt")
-error_mercator_B = np.loadtxt("data/high_res_results/keep/error_mercater_B.txt")
-error_sine_B = np.loadtxt("data/high_res_results/keep/error_sine_B.txt")
-error_orthographic_B = np.loadtxt("data/high_res_results/keep/error_orthographic_B.txt")
-error_steriographic_B = np.loadtxt("data/high_res_results/keep/error_steriographic_B.txt")
-error_gnomic_B = np.loadtxt("data/high_res_results/keep/error_gnomic_B.txt")
+# error_cylindrical_E = np.loadtxt("data/high_res_results/keep_2/error_cylindrical_E.txt")
+# error_mercator_E = np.loadtxt("data/high_res_results/keep_2/error_mercater_E.txt")
+# error_sine_E = np.loadtxt("data/high_res_results/keep_2/error_sine_E.txt")
+# error_orthographic_E = np.loadtxt("data/high_res_results/keep_2/error_orthographic_E.txt")
+# error_steriographic_E = np.loadtxt("data/high_res_results/keep_2/error_steriographic_E.txt")
+# error_gnomic_E = np.loadtxt("data/high_res_results/keep_2/error_gnomic_E.txt")
+# error_cylindrical_B = np.loadtxt("data/high_res_results/keep_2/error_cylindrical_B.txt")
+# error_mercator_B = np.loadtxt("data/high_res_results/keep_2/error_mercater_B.txt")
+# error_sine_B = np.loadtxt("data/high_res_results/keep_2/error_sine_B.txt")
+# error_orthographic_B = np.loadtxt("data/high_res_results/keep_2/error_orthographic_B.txt")
+# error_steriographic_B = np.loadtxt("data/high_res_results/keep_2/error_steriographic_B.txt")
+# error_gnomic_B = np.loadtxt("data/high_res_results/keep_2/error_gnomic_B.txt")
+
+error_cylindrical_E = np.loadtxt("data/high_res_results/error_cylindrical_E.txt")
+error_mercator_E = np.loadtxt("data/high_res_results/error_mercater_E.txt")
+error_sine_E = np.loadtxt("data/high_res_results/error_sine_E.txt")
+error_orthographic_E = np.loadtxt("data/high_res_results/error_orthographic_E.txt")
+error_steriographic_E = np.loadtxt("data/high_res_results/error_steriographic_E.txt")
+error_gnomic_E = np.loadtxt("data/high_res_results/error_gnomic_E.txt")
+error_cylindrical_B = np.loadtxt("data/high_res_results/error_cylindrical_B.txt")
+error_mercator_B = np.loadtxt("data/high_res_results/error_mercater_B.txt")
+error_sine_B = np.loadtxt("data/high_res_results/error_sine_B.txt")
+error_orthographic_B = np.loadtxt("data/high_res_results/error_orthographic_B.txt")
+error_steriographic_B = np.loadtxt("data/high_res_results/error_steriographic_B.txt")
+error_gnomic_B = np.loadtxt("data/high_res_results/error_gnomic_B.txt")
+
 
 error_cylindrical_E_av   = error_cylindrical_E.mean(axis=1)
 error_mercator_E_av      = error_mercator_E.mean(axis=1)
@@ -62,15 +76,17 @@ LSST = np.sqrt(15000.)
 
 label_buffer = 2.0
 ell = 200
-normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
+#normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
+normalisation = 1.0
+
 
 plt.figure()
 plt.plot([DES_SV,DES_SV], [0,1], 'k--')
-plt.text(DES_SV+label_buffer, 0.55, "DES SV", fontsize=18)
+plt.text(DES_SV+label_buffer, 0.5, "CFHTLens\nDES SV", fontsize=18)
 plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
 plt.plot([LSST, LSST], [0,1], 'k--')
-plt.text(LSST+label_buffer, 0.9, "LSST", fontsize=18)
+plt.text(LSST+label_buffer, 0.85, "Euclid\nLSST", fontsize=18)
 plt.errorbar(angle*2*180/np.pi, error_cylindrical_E_av/normalisation,color='red',\
 	yerr=error_cylindrical_E_std/normalisation, label="Cylindrical")
 plt.errorbar(angle*2*180/np.pi, error_mercator_E_av/normalisation,color='magenta',\
@@ -93,11 +109,11 @@ if save_figs:
 
 plt.figure()
 plt.plot([DES_SV,DES_SV], [0,1], 'k--')
-plt.text(DES_SV+label_buffer, 0.55, "DES SV", fontsize=18)
+plt.text(DES_SV+label_buffer, 0.5, "CFHTLens\nDES SV", fontsize=18)
 plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
 plt.plot([LSST, LSST], [0,1], 'k--')
-plt.text(LSST+label_buffer, 0.9, "LSST", fontsize=18)
+plt.text(LSST+label_buffer, 0.85, "Euclid\nLSST", fontsize=18)
 plt.errorbar(angle*2*180/np.pi, error_cylindrical_B_av/normalisation,color='r',\
 	yerr=error_cylindrical_B_std/normalisation, label="Cylindrical")
 plt.errorbar(angle*2*180/np.pi, error_mercator_B_av/normalisation,color='magenta',\

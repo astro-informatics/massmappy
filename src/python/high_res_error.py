@@ -18,7 +18,7 @@ def error_function(x):
 	error = np.sqrt(np.mean(x**2))
 	return error
 
-orth_resolution = 2000 # 4000 for pixels similar size to nside 2048
+orth_resolution = 2000 # 2000 4000 for pixels similar size to nside 2048
 L = orth_resolution*2
 cyl_resolution = 2*L-1
 Method = "MW"
@@ -29,7 +29,7 @@ do_full_sky_proj = True
 do_half_sky_proj = True
 Cyl_Projection_array = ["MERCATOR", "SINE"]
 Projection_array  = ["OP",   "SP",         "GP"]
-zoom_region_array = [np.pi/2, np.pi/2, np.pi/4]
+zoom_region_array = [np.pi/2-1E-6, np.pi/2, np.pi/4]
 N_real = 10
 #Projection_array = ["OP"]
 
@@ -79,8 +79,8 @@ for i_real in range(N_real):
 		for i in range(N_angle):
 			x = np.abs(thetas-np.pi/2)
 			indexes = np.nonzero((x < angle[i]+angle_step/2) & (x > angle[i]-angle_step/2))
-			error_cylindrical_E[i,i_real] = error_function((k_mw[indexes]-kappa_plane[indexes]).real)
-			error_cylindrical_B[i,i_real] = error_function((kappa_plane[indexes]).imag)
+			error_cylindrical_E[i,i_real] = error_function((k_mw[indexes]-kappa_plane[indexes]).real)/error_function(k_mw[indexes])
+			error_cylindrical_B[i,i_real] = error_function((kappa_plane[indexes]).imag)/error_function(k_mw[indexes])
 
 	if do_full_sky_proj:
 
@@ -108,13 +108,13 @@ for i_real in range(N_real):
 					x = np.abs(theta_angle-np.pi/2)
 					y = np.abs(phi_angle)
 					indexes = np.nonzero((x < angle[i]+angle_step/2) & (x > angle[i]-angle_step/2))# & (y < angle[i]+angle_step) & (y > angle[i]-angle_step))
-					error_mercator_E[i,i_real] = error_function((kappa_orig[indexes]-kappa_plane[indexes]).real)
-					error_mercator_B[i,i_real] = error_function((kappa_plane[indexes]).imag)
+					error_mercator_E[i,i_real] = error_function((kappa_orig[indexes]-kappa_plane[indexes]).real)/error_function(kappa_orig[indexes])
+					error_mercator_B[i,i_real] = error_function((kappa_plane[indexes]).imag)/error_function(kappa_orig[indexes])
 				if Projection == "SINE":
 					x = np.sqrt((theta_angle-np.pi/2)*(theta_angle-np.pi/2)+(phi_angle)*(phi_angle))
 					indexes = np.nonzero((x < angle[i]+angle_step/2) & (x > angle[i]-angle_step/2))
-					error_sine_E[i,i_real] = error_function((kappa_orig[indexes]-kappa_plane[indexes]).real)
-					error_sine_B[i,i_real] = error_function((kappa_plane[indexes]).imag)
+					error_sine_E[i,i_real] = error_function((kappa_orig[indexes]-kappa_plane[indexes]).real)/error_function(kappa_orig[indexes])
+					error_sine_B[i,i_real] = error_function((kappa_plane[indexes]).imag)/error_function(kappa_orig[indexes])
 			# 	index_region = np.zeros(x.shape)
 			# 	index_region[indexes] = 1.0
 			# 	plt.figure()
@@ -156,19 +156,19 @@ for i_real in range(N_real):
 				if Projection == "OP":
 					indexes = np.nonzero((rho < np.sin(min(angle[i]+angle_step/2,np.pi/2))) &\
 								(rho > np.sin(angle[i]-angle_step/2)))
-					error_orthographic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)
-					error_orthographic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)
+					error_orthographic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)/error_function(kappa_orig_north[indexes])
+					error_orthographic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)/error_function(kappa_orig_north[indexes])
 				if Projection == "SP":
 					indexes = np.nonzero((rho < np.tan(min(angle[i]+angle_step/2,np.pi/2)/2.0)) &\
 								(rho > np.tan((angle[i]-angle_step/2)/2.0)))
-					error_steriographic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)
-					error_steriographic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)
+					error_steriographic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)/error_function(kappa_orig_north[indexes])
+					error_steriographic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)/error_function(kappa_orig_north[indexes])
 				if Projection == "GP":
 					if angle[i] < np.pi/4:
 						indexes = np.nonzero((rho < np.tan(min(angle[i]+angle_step/2,np.pi/4))) &\
 									(rho > np.sin(angle[i]-angle_step/2)))
-						error_gnomic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)
-						error_gnomic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)
+						error_gnomic_E[i,i_real] = error_function(kappa_orig_north[indexes]-kappa_plane_north[indexes].real)/error_function(kappa_orig_north[indexes])
+						error_gnomic_B[i,i_real] = error_function(kappa_plane_north[indexes].imag)/error_function(kappa_orig_north[indexes])
 					else:
 						error_gnomic_E[i,i_real] = np.nan
 						error_gnomic_B[i,i_real] = np.nan
@@ -232,7 +232,8 @@ Euclid = np.sqrt(15000.)
 
 label_buffer = 2.0
 ell = 200
-normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
+#normalisation = np.sqrt(Cls[ell,1]*ell*(ell+1)/(2*np.pi))
+normalisation = 1.0
 
 plt.figure()
 plt.plot([CFHTLens,CFHTLens], [0,1], 'k--')
