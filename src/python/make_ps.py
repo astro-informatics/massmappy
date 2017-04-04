@@ -151,7 +151,6 @@ show_figs = True
 
 Npix   = hp.nside2npix(Nside)
 ra     = np.ascontiguousarray(mat_contents['RA'])
-print ra.shape
 ra_flip = (-1)*(ra-71.) + 71.
 dec    = np.ascontiguousarray(mat_contents['dec'])
 theta, phi = ssht.ra_dec_to_theta_phi(ra_flip, dec, Degrees=True)
@@ -167,14 +166,16 @@ c2     = np.ascontiguousarray(mat_contents['c2'])
 c2_flip = c2.copy()*(-1)
 weight     = np.ascontiguousarray(mat_contents['weight'])
 
-e1map_mw, e2map_mw= DES.make_shear_mw_map(e1, e2, c1, c2, weight, mcorr, ra_flip, dec, 2, L=L_mw, Method="MW")
-
 alpha = -21+180
 beta  = -37
 g     = 90
 
 zoom_region  = 2.*np.arctan(0.25*250.*5.0*np.pi/(180.*60.))
 sigma_scale = 1.0
+
+
+e1map_mw, e2map_mw= DES.make_shear_mw_map(e1, e2, c1, c2, weight, mcorr, ra_flip, dec, 2, L=L_mw, Method="MW")
+
 
 gamma_mw =  e1map_mw + 1j*e2map_mw
 

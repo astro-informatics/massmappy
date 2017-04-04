@@ -30,17 +30,14 @@ print "mm.kappa_lm_to_gamma_lm_mw"
 gamma_lm = mm.kappa_lm_to_gamma_lm_mw(ks_lm_mw, L)
 print "ssht.inverse"
 gamma = ssht.inverse(gamma_lm, L, Method=Method, Spin=2)
-if  True:
+if  False:
 	print "adding noise"
-	shear = gamma/(1.0-k_mw) + 0.001*(np.random.randn(L,2*L-1) + 1j*np.random.randn(L,2*L-1))
+	shear = gamma/(1.0-k_mw) + 0.1*(np.random.randn(L,2*L-1) + 1j*np.random.randn(L,2*L-1))
 else:
 	shear = gamma/(1.0-k_mw)
 print "Reconstruct on the sphere MW"
-if ismasked == True:
-   k_rec_mw = mm.reduced_shear_to_kappa_mw(shear*mask, L, Method=Method, tol_error=1E-8)
-else:
-   k_rec_mw = mm.reduced_shear_to_kappa_mw(shear, L, Method=Method, tol_error=1E-8)
-print "done"
+k_rec_mw, count = mm.reduced_shear_to_kappa_mw(shear, L, Method=Method, tol_error=1E-10, return_count=True, sigma=np.pi/L)
+print "done", count
 print np.mean(np.abs(k_rec_mw-k_mw))
 #kappa_orig_orth_north, mask_north_real, kappa_orig_orth_south, mask_south_real \
 #	= ssht.polar_projection(k_mw, L, resolution=orth_resolution, Method=Method, rot=[0.0,np.pi/2,0.0], Projection=Projection)# make projection

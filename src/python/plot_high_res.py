@@ -99,7 +99,7 @@ plt.errorbar(angle*2*180/np.pi, error_steriographic_E_av/normalisation,color='bl
 	yerr=error_steriographic_E_std/normalisation, label="Steriographic")
 plt.errorbar(angle*2*180/np.pi, error_gnomic_E_av/normalisation,color='brown',\
 	yerr=error_gnomic_E_std/normalisation, label="Gnomic")
-plt.xlabel(r"$\theta  ({\rm degrees})$", fontsize=20)
+plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)
 plt.xlim([0,180])
@@ -126,7 +126,7 @@ plt.errorbar(angle*2*180/np.pi, error_steriographic_B_av/normalisation,color='bl
 	yerr=error_steriographic_B_std/normalisation, label="Steriographic")
 plt.errorbar(angle*2*180/np.pi, error_gnomic_B_av/normalisation,color='brown',\
 	yerr=error_gnomic_B_std/normalisation, label="Gnomic")
-plt.xlabel(r"$\theta  ({\rm degrees})$", fontsize=20)
+plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)
 plt.xlim([0,180])
