@@ -5,7 +5,7 @@ Main Author: Christopher G R Wallis (christophergrwallis@gmail.com)
 
 ###### Useful and necessary contributions:
 * Jason McEwen (jason.mcewen@ucl.ac.uk)
-* Tom Kitching (t.kitching@ucl.ac.uk)
+* Thomas Kitching (t.kitching@ucl.ac.uk)
 * Boris Leistedt (boris.leistedt@gmail.com)
 * Antoine Plouviez (antoine.plouviez@ens-cachan.fr)
 
