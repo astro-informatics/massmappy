@@ -1,30 +1,30 @@
-massmappy - a code to generate mass maps from galaxy shear measurements
+## massmappy - a code to generate mass maps from galaxy shear measurements
 
-Code Authors: 
+###### Code Authors: 
 Main Author: Christopher G R Wallis (christophergrwallis@gmail.com)
-Useful and necessary contributions:
+
+###### Useful and necessary contributions:
 Jason McEwen (jason.mcewen@ucl.ac.uk)
 Tom Kitching (tom.kitching@gmail.com)
 Boris Leistedt (boris.leistedt@gmail.com)
 Antoine Plouviez (antoine.plouviez@ens-cachan.fr)
 
-Code used for the paper 
-"Mapping dark matter on the celestial sphere with weak gravitational lensing" 
-Christopher G. R. Wallis, Jason D. McEwen, Thomas D. Kitching, Boris Leistedt and Antoine Plouviez
-arXiv:1703.09233
+###### Code used for the papers:  
+
+* ``Mapping dark matter on the celestial sphere with weak gravitational lensing'', Christopher G. R. Wallis, Jason D. McEwen, Thomas D. Kitching, Boris Leistedt and Antoine Plouviez
+arXiv:1703.09233 https://arxiv.org/abs/1703.09233
 
 
-Installation:
+###### Installation:
 
-From the command line, move into the directory and execute:
-python setup.py build_ext --inplace
+From the command line, move into the directory and execute: `python setup.py build_ext --inplace`
 
-Dependances:
-numpy
-matplotlib
-libc
-pyssht www.spinsht.org
-healpy (only needed for certain functions)
+###### Dependances:
+* numpy
+* matplotlib
+* libc
+* pyssht www.spinsht.org
+* healpy (only needed for certain functions)
 
 
 Directories:
