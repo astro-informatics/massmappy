@@ -11,7 +11,7 @@ Main Author: Christopher G R Wallis (christophergrwallis@gmail.com)
 
 ###### Code used for the papers:  
 
-* ``Mapping dark matter on the celestial sphere with weak gravitational lensing'', Christopher G. R. Wallis, Jason D. McEwen, Thomas D. Kitching, Boris Leistedt and Antoine Plouviez arXiv:1703.09233 https://arxiv.org/abs/1703.09233
+* "Mapping dark matter on the celestial sphere with weak gravitational lensing", Christopher G. R. Wallis, Jason D. McEwen, Thomas D. Kitching, Boris Leistedt and Antoine Plouviez arXiv:1703.09233 https://arxiv.org/abs/1703.09233
 
 ###### Installation:
 
