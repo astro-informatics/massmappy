@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Read the DES data into Healpix
+Read the DES data into Healpix and perform mass mapping
 '''
 
 #importing packages                                                                                                                                
