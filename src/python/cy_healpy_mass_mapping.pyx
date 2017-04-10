@@ -60,8 +60,8 @@ def reduced_shear_to_kappa_hp(np.ndarray[double, ndim=1, mode="c"] gamma_real no
         maps_hp = [np.zeros(hp.nside2npix(Nside)),gamma_real, gamma_imag]
         [dummy, gamma_real_smooth, gamma_imag_smooth] = hp.sphtfunc.smoothing(maps_hp, sigma=sigma, pol=True, lmax=lmax)
     else:
-        gamma_real_smooth = gamma_real.copy()
-        gamma_imag_smooth = gamma_imag.copy()
+        gamma_real_smooth = gamma_real
+        gamma_imag_smooth = gamma_imag
 
     maps_hp = [np.zeros(hp.nside2npix(Nside)),gamma_real_smooth, gamma_imag_smooth]
     [dummy, gamma_E_lm_rec, gamma_B_lm_rec] = hp.map2alm(maps_hp, lmax=lmax)

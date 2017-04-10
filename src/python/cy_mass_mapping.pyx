@@ -238,7 +238,7 @@ def reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not No
         gamma_lm     = ssht.guassian_smoothing(gamma_lm, L, sigma_in=sigma)
         gamma_smooth = ssht.inverse(gamma_lm, L, Method=Method, Spin=2)
     else:
-        gamma_smooth = gamma.copy()
+        gamma_smooth = gamma
 
     k_mw_1 = cy_gamma_to_kappa_mw(gamma_smooth, gamma_lm, kappa_lm, k_mw_1, L, Method=Method, sigma=-1)
 
@@ -362,7 +362,7 @@ def reduced_shear_to_kappa_plane(np.ndarray[complex, ndim=2, mode="c"] gamma not
         gamma_kk = np.fft.ifftshift(gamma_kk)
         gamma_smooth = np.fft.ifft2(gamma_kk,norm="ortho")
     else:
-        gamma_smooth = gamma.copy()
+        gamma_smooth = gamma
 
 
     gamma_kk = np.fft.fft2(gamma_smooth,norm="ortho")
