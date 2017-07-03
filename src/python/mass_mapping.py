@@ -2,9 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pyssht as ssht
 import cy_mass_mapping as mm
-import cy_healpy_mass_mapping as hp_mm
 from matplotlib import cm, colors, colorbar, gridspec
-import healpy as hp
 
 
 L = 256
