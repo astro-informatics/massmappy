@@ -14,7 +14,7 @@ mol_resolution = 1000
 Method = "MW"
 
 Add_noise    = False
-Reduce_shear = True
+Reduce_shear = False
 
 Cls = np.loadtxt("data/cls_ap.txt")
 
@@ -22,7 +22,7 @@ print "mm.generate_kappa_lm_mw"
 k_lm_mw = mm.generate_kappa_lm_mw(np.array(Cls[:,1]), L, 2)
 
 print "ssht.guassian_smoothing"
-ks_lm_mw = ssht.guassian_smoothing(k_lm_mw, L, sigma_in=np.pi/256)
+ks_lm_mw = ssht.guassian_smoothing(k_lm_mw, L, sigma_in=np.pi/L)
 
 print "ssht.inverse"
 k_mw = ssht.inverse(ks_lm_mw, L, Reality=True, Method=Method)

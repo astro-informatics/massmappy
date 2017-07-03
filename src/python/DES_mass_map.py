@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Read the DES data into Healpix and perform mass mapping
+Read the DES data into Healpix
 '''
 
 #importing packages                                                                                                                                
@@ -118,8 +118,6 @@ def sine_grid_lines(dec, RA_lines_points=[50, 55, 60, 65, 70, 75, 80, 85, 90, 95
 	RA_lines_2 = resolution-(RA_lines_2-min_dec)/pix_step_deg-1
 
 
-
-
 	dec_lines_1 = 70+np.cos(dec_lines_2*np.pi/180.)*(dec_lines_1-71)/pix_step_deg
 	dec_lines_2 = resolution-(dec_lines_2-min_dec)/pix_step_deg-1
 
@@ -173,6 +171,93 @@ g     = 90
 zoom_region  = 2.*np.arctan(0.25*250.*5.0*np.pi/(180.*60.))
 sigma_scale = 1.0
 
+e1map_hp, e2map_hp, mask_hp = DES.make_shear_hp_map(e1, e2, c1, c2, weight, mcorr, pixnum, Npix, 2)
+
+e1map_hp[e1map_hp!=hp.UNSEEN] = e1map_hp[e1map_hp!=hp.UNSEEN]*(-1)
+e2map_hp[e2map_hp!=hp.UNSEEN] = e2map_hp[e2map_hp!=hp.UNSEEN]*(-1)
+
+mask = np.ones(Npix)
+mask[e2map_hp==hp.UNSEEN] = hp.UNSEEN
+
+# print Npix*float(ra.size)/(float(mask[mask!=hp.UNSEEN].size)*41253*60*60)
+
+# hp.gnomview(e1map_hp, title="e1 map",rot=[70,-53,0.0], reso=6.0)
+# hp.gnomview(e2map_hp, title="e2 map",rot=[70,-53,0.0], reso=6.0)
+
+
+sigma = np.sqrt(2)*2.*20.0*np.pi/(60.*180.*2.355)
+
+kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.reduced_shear_to_kappa_hp(e1map_hp, e2map_hp, L_hp, Nside, sigma=sigma*sigma_scale, Iterate=Iterate)
+# kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.gamma_to_kappa_hp(e1map_hp, e2map_hp, L_hp, Nside, sigma=sigma*sigma_scale)
+
+
+# hp.gnomview(kappa_E_map_hp_rec*mask_hp, title="K E map",rot=[70,-53,0.0], reso=6.0, min=-0.015, max=0.015, cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/DES_hp_E.pdf")
+# hp.gnomview(kappa_B_map_hp_rec*mask_hp, title="K B map",rot=[70,-53,0.0], reso=6.0, min=-0.015, max=0.015, cmap="cubehelix")
+# if save_figs:
+# 	plt.savefig("fig/DES_hp_B.pdf")
+
+alm_mask_hp = hp.map2alm(mask, lmax=L_hp-1)
+alm_E_hp    = hp.map2alm(kappa_E_map_hp_rec, lmax=L_hp-1)
+alm_B_hp    = hp.map2alm(kappa_B_map_hp_rec, lmax=L_hp-1)
+
+alm_mask_hp_mw = mm.lm_hp2lm(alm_mask_hp, L_hp)
+alm_E_hp_mw    = mm.lm_hp2lm(alm_E_hp, L_hp)
+alm_B_hp_mw    = mm.lm_hp2lm(alm_B_hp, L_hp)
+
+mask_mw               = ssht.inverse(alm_mask_hp_mw, L_hp, Reality=True)
+kappa_E_map_hp_rec_mw = ssht.inverse(alm_E_hp_mw, L_hp, Reality=True)
+kappa_B_map_hp_rec_mw = ssht.inverse(alm_B_hp_mw, L_hp, Reality=True)
+
+mask_mw[mask_mw<0.5] = np.nan
+
+k_hp_mw = kappa_E_map_hp_rec_mw + 1j*kappa_B_map_hp_rec_mw
+
+k_mw_north_real, mask_north_real, k_mw_south_real, mask_south_real, \
+k_mw_north_imag, mask_north_imag, k_mw_south_imag, mask_south_imag \
+		= ssht.polar_projection(k_hp_mw*mask_mw, L_hp, resolution=250, Method="MW", zoom_region=zoom_region,\
+			rot=[np.radians(alpha),np.radians(beta),np.radians(g)], Projection="SP")
+
+RA_lines_1, RA_lines_2, dec_lines_1, dec_lines_2 = sterio_grid_lines(resolution=250,zoom_region=zoom_region)
+
+fig, ax = plt.subplots()
+imgplot = ax.imshow(k_mw_south_real,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
+plt.colorbar(imgplot)
+ax.imshow(mask_south_real, interpolation='nearest', cmap=cm.gray, vmin=-1., vmax=1.)
+ax.set_autoscale_on(False)
+for i in range(10):
+	ax.plot(RA_lines_2[:,i],RA_lines_1[:,i], color='white')
+for i in range(4):
+	ax.plot(dec_lines_2[:,i],dec_lines_1[:,i], color='white')
+ax.set_xticks([      24,   53,   81,   108, 135,  163,  190,  219, 248])
+ax.set_xticklabels(['55', '60', '65', '70', '75', '80', '85', '95', '100'])
+ax.set_xlabel('RA (degrees)')
+ax.set_yticks([ 41,  103, 165, 228])
+ax.set_yticklabels(['-45', '-50', '-55', '-60'])
+ax.set_ylabel('Dec (degrees)')
+#plt.axis('off')
+if save_figs:
+	plt.savefig("fig/DES_hp_E_sterio.pdf")
+
+fig, ax = plt.subplots()
+imgplot = ax.imshow(k_mw_south_imag,interpolation='nearest',vmin=-0.015,vmax=0.015, cmap="cubehelix")
+plt.colorbar(imgplot)
+ax.imshow(mask_south_imag, interpolation='nearest', cmap=cm.gray, vmin=-1., vmax=1.)
+ax.set_autoscale_on(False)
+for i in range(RA_lines_2.shape[1]):
+	ax.plot(RA_lines_2[:,i],RA_lines_1[:,i], color='white')
+for i in range(4):
+	ax.plot(dec_lines_2[:,i],dec_lines_1[:,i], color='white')
+ax.set_xticks([      24,   53,   81,   108, 135,  163,  190,  219, 248])
+ax.set_xticklabels(['55', '60', '65', '70', '75', '80', '85', '95', '100'])
+ax.set_xlabel('RA (degrees)')
+ax.set_yticks([ 41,  103, 165, 228])
+ax.set_yticklabels(['-45', '-50', '-55', '-60'])
+ax.set_ylabel('Dec (degrees)')
+#plt.axis('off')
+if save_figs:
+	plt.savefig("fig/DES_hp_B_sterio.pdf")
 
 e1map_mw, e2map_mw= DES.make_shear_mw_map(e1, e2, c1, c2, weight, mcorr, ra_flip, dec, 2, L=L_mw, Method="MW")
 
@@ -539,33 +624,11 @@ plt.colorbar(imgplot)
 if save_figs:
 	plt.savefig("fig/DES_sterio_mw_diff_B.pdf")
 
-e1map_hp, e2map_hp, mask_hp = DES.make_shear_hp_map(e1, e2, c1, c2, weight, mcorr, pixnum, Npix, 2)
 
-
-
-#plot map and power spectra                                                                                                                
-e1map_hp[e1map_hp!=hp.UNSEEN] = e1map_hp[e1map_hp!=hp.UNSEEN]*(-1)
-e2map_hp[e2map_hp!=hp.UNSEEN] = e2map_hp[e2map_hp!=hp.UNSEEN]*(-1)
-
-# hp.gnomview(e1map_hp, title="e1 map",rot=[70,-53,0.0], reso=6.0)
-# hp.gnomview(e2map_hp, title="e2 map",rot=[70,-53,0.0], reso=6.0)
-
-sigma = 2.*20.0*np.pi/(60.*180.*2.355)
-
-kappa_E_map_hp_rec, kappa_B_map_hp_rec = hp_mm.reduced_shear_to_kappa_hp(e1map_hp, e2map_hp, L_hp, Nside, sigma=sigma*sigma_scale, Iterate=Iterate)
-
-
-hp.gnomview(kappa_E_map_hp_rec*mask_hp, title="K E map",rot=[70,-53,0.0], reso=6.0, min=-0.015, max=0.015, cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/DES_hp_E.pdf")
-hp.gnomview(kappa_B_map_hp_rec*mask_hp, title="K B map",rot=[70,-53,0.0], reso=6.0, min=-0.015, max=0.015, cmap="cubehelix")
-if save_figs:
-	plt.savefig("fig/DES_hp_B.pdf")
-
-if show_figs:
-	plt.show()
 
 
 
 
+if show_figs:
+	plt.show()
 

@@ -87,18 +87,18 @@ plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
 plt.plot([LSST, LSST], [0,1], 'k--')
 plt.text(LSST+label_buffer, 0.85, "Euclid\nLSST", fontsize=18)
-plt.errorbar(angle*2*180/np.pi, error_cylindrical_E_av/normalisation,color='red',\
+plt.errorbar(angle*2*180/np.pi, error_cylindrical_E_av/normalisation,color='#377eb8',\
 	yerr=error_cylindrical_E_std/normalisation, label="Cylindrical")
-plt.errorbar(angle*2*180/np.pi, error_mercator_E_av/normalisation,color='magenta',\
+plt.errorbar(angle*2*180/np.pi, error_mercator_E_av/normalisation,color='#ff7f00',\
 	yerr=error_mercator_E_std/normalisation, label="Mercator")
-plt.errorbar(angle*2*180/np.pi, error_sine_E_av/normalisation,color='cyan',\
+plt.errorbar(angle*2*180/np.pi, error_sine_E_av/normalisation,color='#4daf4a',\
 	yerr=error_sine_E_std/normalisation, label="Sinusiodal")
-plt.errorbar(angle*2*180/np.pi, error_orthographic_E_av/normalisation,color='green',\
+plt.errorbar(angle*2*180/np.pi, error_orthographic_E_av/normalisation,color='#f781bf',\
 	yerr=error_orthographic_E_std/normalisation, label="Orthographic")
-plt.errorbar(angle*2*180/np.pi, error_steriographic_E_av/normalisation,color='blue',\
-	yerr=error_steriographic_E_std/normalisation, label="Steriographic")
-plt.errorbar(angle*2*180/np.pi, error_gnomic_E_av/normalisation,color='brown',\
-	yerr=error_gnomic_E_std/normalisation, label="Gnomic")
+plt.errorbar(angle*2*180/np.pi, error_steriographic_E_av/normalisation,color='#a65628',\
+	yerr=error_steriographic_E_std/normalisation, label="Stereographic")
+plt.errorbar(angle*2*180/np.pi, error_gnomic_E_av/normalisation,color='#984ea3',\
+	yerr=error_gnomic_E_std/normalisation, label="Gnomonic")
 plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)
@@ -114,18 +114,18 @@ plt.plot([DES_full,DES_full], [0,1], 'k--')
 plt.text(DES_full+label_buffer, 0.9, "DES full", fontsize=18)
 plt.plot([LSST, LSST], [0,1], 'k--')
 plt.text(LSST+label_buffer, 0.85, "Euclid\nLSST", fontsize=18)
-plt.errorbar(angle*2*180/np.pi, error_cylindrical_B_av/normalisation,color='r',\
+plt.errorbar(angle*2*180/np.pi, error_cylindrical_B_av/normalisation,color='#377eb8',\
 	yerr=error_cylindrical_B_std/normalisation, label="Cylindrical")
-plt.errorbar(angle*2*180/np.pi, error_mercator_B_av/normalisation,color='magenta',\
+plt.errorbar(angle*2*180/np.pi, error_mercator_B_av/normalisation,color='#ff7f00',\
 	yerr=error_mercator_B_std/normalisation, label="Mercator")
-plt.errorbar(angle*2*180/np.pi, error_sine_B_av/normalisation,color='cyan',\
+plt.errorbar(angle*2*180/np.pi, error_sine_B_av/normalisation,color='#4daf4a',\
 	yerr=error_sine_B_std/normalisation, label="Sinusiodal")
-plt.errorbar(angle*2*180/np.pi, error_orthographic_B_av/normalisation,color='green',\
+plt.errorbar(angle*2*180/np.pi, error_orthographic_B_av/normalisation,color='#f781bf',\
 	yerr=error_orthographic_B_std/normalisation, label="Orthographic")
-plt.errorbar(angle*2*180/np.pi, error_steriographic_B_av/normalisation,color='blue',\
-	yerr=error_steriographic_B_std/normalisation, label="Steriographic")
-plt.errorbar(angle*2*180/np.pi, error_gnomic_B_av/normalisation,color='brown',\
-	yerr=error_gnomic_B_std/normalisation, label="Gnomic")
+plt.errorbar(angle*2*180/np.pi, error_steriographic_B_av/normalisation,color='#a65628',\
+	yerr=error_steriographic_B_std/normalisation, label="Stereographic")
+plt.errorbar(angle*2*180/np.pi, error_gnomic_B_av/normalisation,color='#984ea3',\
+	yerr=error_gnomic_B_std/normalisation, label="Gnomonic")
 plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)
