@@ -1,0 +1,99 @@
+Patches to download
+
+Each patch is given by a ra and dec in deg of the lowest ra and dec corner ie download from ra to ra+5 and similar for dec
+
+Image 1:
+
+RA                 DEC
+1h50 : 2h40        -8deg : -2deg 
+27.5deg : 40deg    
+
+patches
+27.5               -8
+27.5               -3
+32.5               -8
+32.5               -3
+37.5               -8
+37.5               -3
+
+Image 2:
+
+RA                  DEC
+22h00 : 22h50       -2.5deg : 4deg 
+330.0deg : 342.5deg    
+
+patches
+330.0               -2.5
+330.0                2.5
+335.0               -2.5
+335.0                2.5
+340.0               -2.5
+340.0                2.5
+
+Image 3:
+
+RA                  DEC
+8h40 : 9h20         -2.5deg : 2.5deg
+130deg : 140deg
+
+patches
+130                 -2.5
+135                 -2.5
+
+Image 4:
+
+RA                  DEC
+11h40 : 12h20       -2.5deg : 2.5deg
+175deg : 185deg
+
+patches
+175                 -2.5
+180                 -2.5
+
+Image 5:
+
+RA                  DEC
+14h10 : 14h50       -2.5deg : 5deg
+212.5deg : 222.5deg
+
+patches
+212.5               -2.5
+212.5                2.5
+217.5               -2.5
+217.5                2.5
+
+
+Image 6:
+
+RA                  DEC
+16h00 : 16h40       40deg : 45deg
+240deg : 250deg
+
+patches
+240                  40
+245                  40
+
+Concatination of Patches:
+27.5               -8
+27.5               -3
+32.5               -8
+32.5               -3
+37.5               -8
+37.5               -3
+330.0               -2.5
+330.0                2.5
+335.0               -2.5
+335.0                2.5
+340.0               -2.5
+340.0                2.5
+130                 -2.5
+135                 -2.5
+175                 -2.5
+180                 -2.5
+212.5               -2.5
+212.5                2.5
+217.5               -2.5
+217.5                2.5
+240                  40
+245                  40
+
