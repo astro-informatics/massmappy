@@ -17,12 +17,17 @@ for root, dirs, files in os.walk("./src/python/", topdown=False):
 
 include_dirs = [
     numpy.get_include(),
-#    os.environ['code']+"ssht/include/c",
+   os.environ['S2LET']+"/include/",
+   os.environ['SO3']+"/include/c/",
+   os.environ['SSHT']+"/include/c/",
     ]
 
 extra_link_args=[
-#    "-L"+os.environ['code']+"ssht/lib/c",
-#    "-L"+os.environ['FFTW']+"/lib",
+   "-L"+os.environ['S2LET']+"/lib/",
+   "-L"+os.environ['SO3']+"/lib/c/",
+   "-L"+os.environ['SSHT']+"/lib/c/",
+   "-L"+os.environ['FFTW']+"/lib",
+
 ]
 
 setup(
@@ -45,6 +50,14 @@ setup(
             sources=["src/python/cy_healpy_mass_mapping.pyx"],
             include_dirs=include_dirs,
             libraries=[],
+            extra_link_args=extra_link_args,
+            extra_compile_args=[]
+    ),
+    Extension("src/python/cy_eb_sep",
+            package_dir=['src'],
+            sources=["src/python/cy_eb_sep.pyx"],
+            include_dirs=include_dirs,
+            libraries=["s2let", "so3", "fftw3", "ssht"],
             extra_link_args=extra_link_args,
             extra_compile_args=[]
     ),
