@@ -1,2 +1,3 @@
 src/python/*.c
 src/python/*.so
+data/DES.mat
