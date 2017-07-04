@@ -55,3 +55,9 @@ data/ 			: Contains data used/made by the code
 	cls_ap.txt                  		Interpelated power spectrum used by the code
 	high_res_results/            		Example results from high_res_error.py
 	reduced_shear_iteration.txt			Reduced shear results from low_res_examples.py
+
+
+Other:
+
+Please note all the software is disgned to be run from the head directory eg: 
+python src/python/mass_mapping.py
