@@ -174,7 +174,6 @@ zoom_region  = 2.*np.arctan(0.25*250.*5.0*np.pi/(180.*60.))
 sigma_scale = 1.0
 
 
-<<<<<<< HEAD
 e1map_hp, e2map_hp, mask_hp = DES.make_shear_hp_map(e1, e2, c1, c2, weight, mcorr, pixnum, Npix, 2)
 
 e1map_hp[e1map_hp!=hp.UNSEEN] = e1map_hp[e1map_hp!=hp.UNSEEN]*(-1)
@@ -263,9 +262,6 @@ ax.set_ylabel('Dec (degrees)')
 if save_figs:
 	plt.savefig("fig/DES_hp_B_sterio.pdf")
 
-
-=======
->>>>>>> 49adf37ee2517ddddba025a13916ce2762be5f1f
 e1map_mw, e2map_mw= DES.make_shear_mw_map(e1, e2, c1, c2, weight, mcorr, ra_flip, dec, 2, L=L_mw, Method="MW")
 
 
