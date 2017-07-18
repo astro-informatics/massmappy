@@ -12,7 +12,7 @@ mol_resolution = 1000
 Method = "MW"
 
 Add_noise    = False
-Reduce_shear = False
+Reduce_shear = True
 
 Cls = np.loadtxt("data/cls_ap.txt")
 

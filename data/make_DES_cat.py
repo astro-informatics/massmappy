@@ -5,7 +5,7 @@ import os.path
 
 # Download data from here https://des.ncsa.illinois.edu/releases/sva1/content
 # You will need sva1_gold_r1.0_wlinfo.fits.gz, sva1_gold_r1.1_im3shape.fits.gz and sva1_gold_r1.0_bpz_point.fits.gz
-# We would like to thank Chihway Chang and Joe Zunts for their help with constructing tha catalogue
+# We would like to thank Chihway Chang and Joe Zunts for their help with constructing the catalogue
 
 info_check     = os.path.exists('data/sva1_gold_r1.0_wlinfo.fits.gz')
 im3shape_check = os.path.exists('data/sva1_gold_r1.1_im3shape.fits.gz')

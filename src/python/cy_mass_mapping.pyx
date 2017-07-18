@@ -66,12 +66,14 @@ def generate_kappa_lm_hp(np.ndarray[double, ndim=1, mode="c"] Cl not None, int L
     cdef np.ndarray[complex, ndim=1] k_lm
     cdef int el, em, index
 
-    k_lm = np.empty(((L*L+L)/2,), dtype=complex)
+    k_lm = np.empty((L*(L+1)/2,), dtype=complex)
 
     if seed > -1:
         np.random.seed(seed)
 
-    k_lm[0] = 0.0; k_lm[1] = 0.0; k_lm[2] = 0.0; k_lm[3] = 0.0;
+    k_lm[mm.cy_healpy_lm2ind(0, 0, L)] = 0.0
+    k_lm[mm.cy_healpy_lm2ind(1, 0, L)] = 0.0
+    k_lm[mm.cy_healpy_lm2ind(1, 1, L)] = 0.0
 
     for el in range(2,L):
         index = mm.cy_healpy_lm2ind(el, 0, L)
@@ -139,8 +141,10 @@ def kappa_lm_to_gamma_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] k_lm no
     gamma_E_lm = np.empty((L*(L+1)/2,), dtype=complex)
     gamma_B_lm = np.zeros((L*(L+1)/2,), dtype=complex)
 
-    gamma_E_lm[0] = 0.0; gamma_E_lm[1] = 0.0; gamma_E_lm[2] = 0.0; gamma_E_lm[3] = 0.0
-    
+    gamma_E_lm[mm.cy_healpy_lm2ind(0, 0, L)] = 0.0; 
+    gamma_E_lm[mm.cy_healpy_lm2ind(1, 0, L)] = 0.0; 
+    gamma_E_lm[mm.cy_healpy_lm2ind(1, 1, L)] = 0.0;
+
     for ell in range(2,L):
         D_ell = sqrt((<float>ell+2.0)*(<float>ell-1.0)/((<float>ell+1.0)*<float>ell))
         for em in range(0,ell+1):
