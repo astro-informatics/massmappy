@@ -131,8 +131,10 @@ Output:
 
 ### gamma_lm_to_kappa_lm_hp
 
-```gamma_lm_to_kappa_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] gamma_E_lm not None, \
-    np.ndarray[double complex, ndim=1, mode="c"] gamma_B_lm not None, int L, float sigma=-1):```
+~~~~
+gamma_lm_to_kappa_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] gamma_E_lm not None, \
+    np.ndarray[double complex, ndim=1, mode="c"] gamma_B_lm not None, int L, float sigma=-1):
+~~~~
 
 Converting shear to convergence in harmonic space in HEALPix lm convention
 
