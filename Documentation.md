@@ -4,7 +4,9 @@ Here is a description of each function the inputs and outputs. If you have any q
 
 ### lm2lm_hp
 
-```lm2lm_hp(np.ndarray[double complex, ndim=1, mode="c"] f_lm not None, int L)```
+~~~~~
+lm2lm_hp(np.ndarray[double complex, ndim=1, mode="c"] f_lm not None, int L)
+~~~~
 
 Function to convert between SSHT and HEALPix definitions of how harmonic coefficiants are stored.
 
@@ -18,7 +20,7 @@ Outputs:
 
 ### lm_hp2lm
 
-```lm_hp2lm(np.ndarray[double complex, ndim=1, mode="c"] flm_hp not None, int L)```
+~~~~lm_hp2lm(np.ndarray[double complex, ndim=1, mode="c"] flm_hp not None, int L)~~~~
 
 Function to convert between HEALPix and SSHT definitions of how harmonic coefficiants are stored.
 
@@ -31,7 +33,7 @@ Outputs:
 
 ### healpy_lm2ind
 
-```healpy_lm2ind(int el, int em, int L):```
+~~~~healpy_lm2ind(int el, int em, int L):~~~~
 
 Function to convert from harmonic coefficiant terms ell and em to the index of a HEALPix array
 
@@ -45,7 +47,7 @@ Output:
 
 ### healpy_ind2lm
 
-```healpy_ind2lm(int ind, int L):```
+~~~~healpy_ind2lm(int ind, int L):~~~~
 
 Function to convert from the index of a HEALPix array to harmonic coefficiant terms ell and em 
 
@@ -61,7 +63,7 @@ Output:
 
 ### generate_kappa_lm_hp
 
-```generate_kappa_lm_hp(np.ndarray[double, ndim=1, mode="c"] Cl not None, int L, int seed=-1)```
+~~~~generate_kappa_lm_hp(np.ndarray[double, ndim=1, mode="c"] Cl not None, int L, int seed=-1)~~~~
 
 Generate convergance harmonic coefs in HEALPix lm convention (assuming a Guassian realisation)
 
@@ -75,7 +77,7 @@ Output:
 
 ### generate_kappa_lm_mw
 
-```generate_kappa_lm_mw(np.ndarray[double, ndim=1, mode="c"] Cl not None, int L, int seed=-1):```
+~~~~generate_kappa_lm_mw(np.ndarray[double, ndim=1, mode="c"] Cl not None, int L, int seed=-1):~~~~
 
 Generate converage harmonic coefs in SSHT lm convention
 
@@ -89,7 +91,7 @@ Output:
 
 ### kappa_lm_to_gamma_lm_mw
 
-```kappa_lm_to_gamma_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] k_lm not None, int L):```
+~~~~kappa_lm_to_gamma_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] k_lm not None, int L):~~~~
 
 Converting converace to shear in harmonic space in SSHT lm convention
 
@@ -102,7 +104,7 @@ Output:
 
 ### kappa_lm_to_gamma_lm_hp
 
-```kappa_lm_to_gamma_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] k_lm not None, int L):```
+~~~~kappa_lm_to_gamma_lm_hp(np.ndarray[double complex, ndim=1, mode="c"] k_lm not None, int L):~~~~
 
 Converting convergence to shear in harmonic space in HEALPix lm convention
  
@@ -117,7 +119,7 @@ Output:
 
 ### gamma_lm_to_kappa_lm_mw
 
-```gamma_lm_to_kappa_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] gamma_lm not None, int L, float sigma=-1):```
+~~~~gamma_lm_to_kappa_lm_mw(np.ndarray[double complex, ndim=1, mode="c"] gamma_lm not None, int L, float sigma=-1):~~~~
 
 Converting shear to convergence in harmonic space in SSHT lm convention
 
@@ -149,8 +151,10 @@ Output:
 
 ### reduced_shear_to_kappa_mw
 
-```reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1,\
-    float tol_error=1E-10, bint Iterate=True, bint return_count=False):```
+~~~~
+reduced_shear_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1,\
+    float tol_error=1E-10, bint Iterate=True, bint return_count=False):
+~~~~
 
 Converting reduced shear to convergence in real space in SSHT convention using an iterative scheme.
 
@@ -174,7 +178,9 @@ If `return_count=True`
 
 ### gamma_to_kappa_mw
 
-```gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1)```
+~~~~
+gamma_to_kappa_mw(np.ndarray[complex, ndim=2, mode="c"] gamma not None, int L, str Method="MW", float sigma=-1)
+~~~~
 
 Converting shear to convergence in real space in SSHT convention.
 
