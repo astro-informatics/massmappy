@@ -6,7 +6,7 @@ Here is a description of each function the inputs and outputs. If you have any q
 
 ~~~~~
 lm2lm_hp(np.ndarray[double complex, ndim=1, mode="c"] f_lm not None, int L)
-~~~~
+~~~~~
 
 Function to convert between SSHT and HEALPix definitions of how harmonic coefficiants are stored.
 
