@@ -15,7 +15,15 @@ Main Author: Christopher G R Wallis (christophergrwallis@gmail.com)
 
 ###### Installation:
 
-From the command line, move into the directory and execute: `python setup.py build_ext --inplace`
+For some of the functions healpy must be installed (https://healpy.readthedocs.io/en/latest/). This is not necessary for all the code so can be skipped if you do not want to use the HEALPix sampling scheme.
+
+To install (if you have healpy) run:
+
+`python setup.py build_ext --inplace`
+
+To install (if you do not have healpy) run:
+
+`python setup_no_healpy.py build_ext --inplace`
 
 ###### Dependances:
 * numpy
@@ -24,6 +32,9 @@ From the command line, move into the directory and execute: `python setup.py bui
 * pyssht www.spinsht.org
 * healpy (only needed for certain functions)
 
+###### Documentation
+
+Look at Documentation.md for a description of all the functions
 
 ###### Directories:
 

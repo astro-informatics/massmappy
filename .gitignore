@@ -3,3 +3,4 @@ src/python/*.so
 data/DES.mat
 build/
 tests/*.pyc
+.DS_Store
