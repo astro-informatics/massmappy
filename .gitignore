@@ -4,3 +4,4 @@ data/DES.mat
 build/
 tests/*.pyc
 .DS_Store
+src/.DS_Store
