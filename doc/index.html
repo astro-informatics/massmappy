@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<meta name="description" content="massmappy" />
+<meta name="keywords" content="weak lensing, cosmic shear, convergence, mass mapping, 
+  des, euclid, lsst, 
+  s2let, spherical, harmonics, spherical harmonics, sphere, transforms, fourier, fast, algorithms, 
+  wallis, mcewen, kitching, leistedt, plouviez" />
+<meta name="author" content="Jason McEwen" />
+<link rel="stylesheet" type="text/css" href="style.css" title="1024px style" media="screen,projection" />
+<title>massmappy</title>
+</head>
+
+<body>
+<div id="wrap">
+
+
+<!--------------------------- HEADER --------------------------->
+<div id="header">
+
+  <p id="toplinks">
+  <a href="#introduction">Overview</a> |
+  <a href="#download">Download</a> |
+  <a href="#referencing">Papers and referencing</a> |
+  <a href="#license">License</a> |
+  <a href="#authors">Authors</a>
+  </p>
+
+  <table border="0" cellspacing="0">
+    <tr>
+      <td width=200 align="right" valign="top">
+	<img src="images/low_res_gamma_OP_south_imag.png" width="160" border=0>
+      </td>
+      <td width=500 align="left" valign="center">
+	<h1 class="title">massmappy<span class="fade"></span></h1>
+	<p id="slogantitle">Mapping dark matter on the celestial sphere</p>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+
+<!--------------------------- SIDEBAR --------------------------->
+<div id="sidebar">
+
+
+<h2>News</h2>
+
+<ul>
+<li><strong>July 2017</strong><br />
+<strong>massmappy</strong> code supporting spherical Kaiser-Squires estimators released.
+</li>
+
+<li><strong>March 2017</strong><br />
+First paper submitted on mass mapping on the celestial sphere with Kaiser-Squires estimators.
+</li>
+
+</ul>
+
+
+</div>
+
+
+<!--------------------------- CONTENT --------------------------->
+<div id="content">
+
+<!--------------------------------------------------------------->
+<a name="introduction"><h2>Overview</h2></a>
+
+  <p>
+  The <strong>massmappy</strong> code provides functionality to recover convergence mass maps on the celestial sphere from weak lensing cosmic shear observations. At present the spherical Kaiser-Squires estimator is implemented.  Additional estimators will be added in future.
+    
+  <p>
+  <strong>massmappy</strong> relies on the <a href="http://www.spinsht.org">SSHT</a> and <a href="http://HEALPix.jpl.nasa.gov/">HEALPix</a> codes to handle sampled data on the sphere.
+
+  <!--
+  <p>   
+  <strong>SILC</strong> relies on the <a href="http://www.s2let.org">S2LET</a> code to compute fast wavelet transforms of signals on the sphere, and the <a href="http://www.spinsht.org">SSHT</a> and <a href="http://www.sothree.org/">SO3</a> codes to compute fast harmonic transforms on the sphere and rotation group, respectively.  Output maps are provided in <a href="http://HEALPix.jpl.nasa.gov/">HEALPix</a> format.
+  -->
+
+  <p>
+  For further details, please see our related paper: <a href="#referencing">Wallis et al. (2017), Mapping dark matter on the celestial sphere with weak gravitational lensing</a>. 
+
+<br>
+
+<!--------------------------------------------------------------->
+<a name="download"><h2>Download</h2></a>
+
+  <p>We make the source code of the <strong>massmappy</strong> package
+  available under the license described <a
+   href="#license">below</a>.
+
+  <p><strong>massmappy</strong> can be downloaded from the following site:
+
+  <p align=center>
+  <a href="https://github.com/astro-informatics/massmappy"> <img src="images/download_icon.gif"> </a>
+  </p>
+
+
+<!--------------------------------------------------------------->
+<a name="referencing"><h2>Papers and referencing</h2></a>
+
+<p> If you use <strong>massmappy</strong> for work that results in
+publication, please reference this site (<a
+ href="http://www.massmappy.org/">http://www.massmappy.org/</a>)
+and our related academic paper:
+</p>
+
+<blockquote> Christopher G. R. Wallis, Jason D. McEwen, Thomas D. Kitching, Boris Leistedt, Antoine Plouviez, <strong>Mapping dark matter on the celestial sphere with weak gravitational lensing</strong>, Mon. Not. Roy. Astron. Soc., submitted, 2017 (<a href="http://arxiv.org/abs/1703.09233">arXiv:1703.09233</a>). </blockquote>
+
+
+
+<br>
+
+
+
+<!--------------------------------------------------------------->
+<a name="license"><h2>License</h2></a>
+
+<blockquote>  
+<p>
+massmappy package for mapping dark matter on the celestial sphere<br>
+Copyright (C) 2017 Christopher Wallis, Jason McEwen, Thomas Kitching, Boris Leistedt, Antoine Plouviez
+
+<p>
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at
+your option) any later version.
+
+<p>
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details (<a href="../LICENSE.txt">LICENSE.txt</a>).
+
+<p> 
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+02110-1301, USA.
+</blockquote>
+
+<!--------------------------------------------------------------->
+<a name="authors"><h2>Authors</h2></a>
+
+  <p> <strong>massmappy</strong> was developed by <a href="https://www.christophergrwallis.org/">Christopher Wallis</a>, <a href="http://www.jasonmcewen.org/">Jason McEwen</a>, <a href="http://www.thomaskitching.net/">Thomas Kitching</a>, <a href="http://ixkael.com/blog/">Boris Leistedt</a>, and Antoine Plouviez.
+  
+
+
+<br><br><br>
+
+</div>
+
+
+
+<!--------------------------- FOOTER --------------------------->
+<div id="footer">
+
+  <p>
+  <a href="#header">Back to top</a><br >
+
+  <p>&copy; 2017 <a href="http://www.jasonmcewen.org">Jason McEwen</a> | Design by
+  <a href="http://andreasviklund.com/">Andreas Viklund</a> </p>
+
+
+
+</div>
+</body>
+</html>

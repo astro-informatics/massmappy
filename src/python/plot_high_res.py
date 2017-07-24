@@ -95,17 +95,10 @@ plt.errorbar(angle*2*180/np.pi, error_sine_E_av/normalisation,color='#4daf4a',\
 	yerr=error_sine_E_std/normalisation, label="Sinusiodal")
 plt.errorbar(angle*2*180/np.pi, error_orthographic_E_av/normalisation,color='#f781bf',\
 	yerr=error_orthographic_E_std/normalisation, label="Orthographic")
-<<<<<<< HEAD
 plt.errorbar(angle*2*180/np.pi, error_steriographic_E_av/normalisation,color='#a65628',\
 	yerr=error_steriographic_E_std/normalisation, label="Stereographic")
 plt.errorbar(angle*2*180/np.pi, error_gnomic_E_av/normalisation,color='#984ea3',\
 	yerr=error_gnomic_E_std/normalisation, label="Gnomonic")
-=======
-plt.errorbar(angle*2*180/np.pi, error_steriographic_E_av/normalisation,color='blue',\
-	yerr=error_steriographic_E_std/normalisation, label="Steriographic")
-plt.errorbar(angle*2*180/np.pi, error_gnomic_E_av/normalisation,color='brown',\
-	yerr=error_gnomic_E_std/normalisation, label="Gnomic")
->>>>>>> 49adf37ee2517ddddba025a13916ce2762be5f1f
 plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)
@@ -129,17 +122,10 @@ plt.errorbar(angle*2*180/np.pi, error_sine_B_av/normalisation,color='#4daf4a',\
 	yerr=error_sine_B_std/normalisation, label="Sinusiodal")
 plt.errorbar(angle*2*180/np.pi, error_orthographic_B_av/normalisation,color='#f781bf',\
 	yerr=error_orthographic_B_std/normalisation, label="Orthographic")
-<<<<<<< HEAD
 plt.errorbar(angle*2*180/np.pi, error_steriographic_B_av/normalisation,color='#a65628',\
 	yerr=error_steriographic_B_std/normalisation, label="Stereographic")
 plt.errorbar(angle*2*180/np.pi, error_gnomic_B_av/normalisation,color='#984ea3',\
 	yerr=error_gnomic_B_std/normalisation, label="Gnomonic")
-=======
-plt.errorbar(angle*2*180/np.pi, error_steriographic_B_av/normalisation,color='blue',\
-	yerr=error_steriographic_B_std/normalisation, label="Steriographic")
-plt.errorbar(angle*2*180/np.pi, error_gnomic_B_av/normalisation,color='brown',\
-	yerr=error_gnomic_B_std/normalisation, label="Gnomic")
->>>>>>> 49adf37ee2517ddddba025a13916ce2762be5f1f
 plt.xlabel(r"$\Theta \, ({\rm degrees})$", fontsize=20)
 plt.ylabel(r"$\sigma_{\rm err}/\sigma_{\kappa}$", fontsize=20)
 plt.legend(loc=2)

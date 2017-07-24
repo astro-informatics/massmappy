@@ -1,3 +1,7 @@
 src/python/*.c
 src/python/*.so
-build/temp.macosx-10.5-x86_64-2.7/src/python/cy_lsst_challenge_1_utils.o
+data/DES.mat
+build/
+tests/*.pyc
+.DS_Store
+src/.DS_Store
