@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pyssht as ssht
-import cy_mass_mapping as mm
+import massmappy.cy_mass_mapping as mm
 from matplotlib import cm, colors, colorbar, gridspec
 
 
@@ -83,4 +83,3 @@ plt.axis('off')
 print "finished"
 
 plt.show()
-

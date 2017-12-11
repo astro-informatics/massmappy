@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pyssht as ssht
-import cy_mass_mapping as mm
+import massmappy.cy_mass_mapping as mm
 from matplotlib import cm
 
 show_figs = False
@@ -67,9 +67,9 @@ error_gnomic_B_std        = error_gnomic_B.std(axis=1)
 N_angle = 12*2000/500
 angle, angle_step = np.linspace(0.0, np.pi/2, N_angle, retstep=True)
 
-CFHTLens = np.sqrt(154.) 
+CFHTLens = np.sqrt(154.)
 DES_SV = np.sqrt(139.)
-KiDS = np.sqrt(1500.) 
+KiDS = np.sqrt(1500.)
 DES_full = np.sqrt(5000.)
 Euclid = np.sqrt(15000.)
 LSST = np.sqrt(15000.)

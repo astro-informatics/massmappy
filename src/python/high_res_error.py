@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pyssht as ssht
-import cy_mass_mapping as mm
+import massmappy.cy_mass_mapping as mm
 from matplotlib import cm
 
 def plot_projection(f, mask, title, save_figs, filename):
@@ -70,7 +70,7 @@ for i_real in range(N_real):
 
 	gamma = ssht.inverse(gamma_lm, L, Method=Method, Spin=2)
 	if do_cylindrical:
-		print "Doing Projection Cylindrical" 
+		print "Doing Projection Cylindrical"
 
 		gamma_plane = -gamma
 		kappa_orig_plane = k_mw
@@ -131,14 +131,14 @@ for i_real in range(N_real):
 	if do_half_sky_proj:
 
 		for Projection, zoom_region in zip(Projection_array, zoom_region_array):
-			print "Doing Projection  ", Projection 
+			print "Doing Projection  ", Projection
 
 			# project gamma
 			proj_north_real, mask_north_real, proj_south_real, mask_south_real,\
 			proj_north_imag, mask_north_imag, proj_south_imag, mask_south_imag\
 				 = ssht.polar_projection(gamma, L, resolution=orth_resolution, Method=Method, rot=[0.0,np.pi/2,0.0], \
 				 	Projection=Projection, Spin=2, zoom_region=zoom_region)
-	
+
 			gamma_plane_north = proj_north_real + 1j*proj_north_imag
 
 
@@ -224,9 +224,9 @@ if do_half_sky_proj:
 	np.savetxt("data/high_res_results/error_gnomic_B.txt", error_gnomic_B)
 
 
-CFHTLens = np.sqrt(154.) 
+CFHTLens = np.sqrt(154.)
 DES_SV = np.sqrt(139.)
-KiDS = np.sqrt(1500.) 
+KiDS = np.sqrt(1500.)
 DES_full = np.sqrt(5000.)
 Euclid = np.sqrt(15000.)
 

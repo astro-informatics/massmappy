@@ -2,8 +2,8 @@ import numpy as np
 import scipy.ndimage as spim
 import matplotlib.pyplot as plt
 import pyssht as ssht
-import cy_mass_mapping as mm
-import cy_healpy_mass_mapping as hp_mm
+import massmappy.cy_mass_mapping as mm
+import massmappy.cy_healpy_mass_mapping as hp_mm
 import healpy as hp
 from matplotlib import cm
 from matplotlib import ticker
@@ -77,7 +77,7 @@ if print_iteration_results:
 	start_mw = time.clock()
 	k_mw_rec, count_mw = mm.reduced_shear_to_kappa_mw(shear, L, Method=Method, tol_error=tol_error, Iterate=Iterate, return_count=True)
 	elapsed_mw = (time.clock() - start_mw)
-	
+
 	error_mw = np.sqrt(np.mean((k_mw-k_mw_rec.real)**2))
 	f.write('Spherical MW ' + str(count_mw) + '  ' + str(error_mw/normalisation) + '  ' + str(elapsed_mw) + '\n')
 
@@ -95,7 +95,7 @@ if print_iteration_results:
 	start_hp = time.clock()
 	kappa_E_map_hp_rec, kappa_B_map_hp_rec, count_hp = hp_mm.reduced_shear_to_kappa_hp(maps_hp[1], maps_hp[2], L, Nside, tol_error=tol_error, Iterate=Iterate, return_count=True)
 	elapsed_hp = (time.clock() - start_hp)
-	
+
 	error_hp = np.sqrt(np.mean((k_hp-kappa_E_map_hp_rec)**2))
 	f.write('Spherical healpy ' + str(count_hp) + '  ' + str(error_hp/normalisation) + '  ' + str(elapsed_hp) + '\n')
 
@@ -119,7 +119,7 @@ for Projection in Equatorial_Projection_array:
 		start_plane = time.clock()
 		kappa_plane, count_plane  = mm.reduced_shear_to_kappa_plane(shear_plane, 1.0,1.0, tol_error=tol_error, Iterate=Iterate, return_count=True)
 		elapsed_plane = (time.clock() - start_plane)
-	
+
 		error_plane = np.sqrt(np.nanmean((kappa_orig-kappa_plane.real)**2))
 		print count_plane, error_plane, elapsed_plane
 		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane/normalisation) + '  ' + str(elapsed_plane) + '\n')
@@ -212,7 +212,7 @@ else:
 	if save_figs:
 		plt.savefig("fig/low_res_kappa_Cylindrical_north_error_imag.pdf")
 
-		
+
 	plt.figure()
 	imgplot = plt.imshow(shear_plane.imag,interpolation='nearest', extent=[0,2*np.pi,0,np.pi],\
 		vmin=-gamma_plot_range,vmax=gamma_plot_range, cmap="cubehelix")
@@ -224,7 +224,7 @@ else:
 	if save_figs:
 		plt.savefig("fig/low_res_gamma_Cylindrical_imag.pdf")
 
-		
+
 	plt.figure()
 	imgplot = plt.imshow(shear_plane.real,interpolation='nearest', extent=[0,2*np.pi,0,np.pi],\
 		vmin=-gamma_plot_range,vmax=gamma_plot_range, cmap="cubehelix")
@@ -242,13 +242,13 @@ else:
 plt.close("all")
 
 for Projection in Polar_Projection_array:
-	print "Doing Projection  ", Projection 
+	print "Doing Projection  ", Projection
 
 	# project gamma
 	proj_north_real, mask_north_real, proj_south_real, mask_south_real,\
 	proj_north_imag, mask_north_imag, proj_south_imag, mask_south_imag\
 		 = ssht.polar_projection(shear, L, resolution=orth_resolution, Method=Method, rot=[0.0,np.pi/2,0.0], Projection=Projection, Spin=2)
-	
+
 	shear_plane_north = proj_north_real + 1j*proj_north_imag
 	shear_plane_south = proj_south_real - 1j*proj_south_imag
 
@@ -261,7 +261,7 @@ for Projection in Polar_Projection_array:
 		start_plane = time.clock()
 		kappa_plane_north, count_plane  = mm.reduced_shear_to_kappa_plane(shear_plane_north, 1.0,1.0, tol_error=tol_error, Iterate=Iterate, return_count=True)
 		elapsed_plane = (time.clock() - start_plane)
-	
+
 		error_plane = np.sqrt(np.nanmean((kappa_orig_north-kappa_plane_north.real)**2))
 		print count_plane, error_plane, elapsed_plane
 		f.write(Projection + ' ' + str(count_plane) + '  ' + str(error_plane/normalisation) + '  ' + str(elapsed_plane) + '\n')
